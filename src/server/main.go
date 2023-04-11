@@ -7,6 +7,7 @@ import (
 	"zlf_leaf/src/server/game"
 	"zlf_leaf/src/server/gate"
 	"zlf_leaf/src/server/login"
+	"zlf_leaf/src/server/web"
 )
 
 func main() {
@@ -20,5 +21,6 @@ func main() {
 		game.Module,
 		gate.Module,
 		login.Module,
+		web.Module,
 	)
 }
