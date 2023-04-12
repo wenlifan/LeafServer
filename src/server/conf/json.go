@@ -2,8 +2,8 @@ package conf
 
 import (
 	"encoding/json"
+	"github.com/name5566/leaf/log"
 	"io/ioutil"
-	"zlf_leaf/src/frame/leaf/log"
 )
 
 var Server struct {

@@ -1,13 +1,12 @@
 package main
 
 import (
-	"zlf_leaf/src/frame/leaf"
-	lconf "zlf_leaf/src/frame/leaf/conf"
-	"zlf_leaf/src/server/conf"
-	"zlf_leaf/src/server/game"
-	"zlf_leaf/src/server/gate"
-	"zlf_leaf/src/server/login"
-	"zlf_leaf/src/server/web"
+	"github.com/name5566/leaf"
+	lconf "github.com/name5566/leaf/conf"
+	"github.com/zhanglifan/leaf_server/src/server/conf"
+	"github.com/zhanglifan/leaf_server/src/server/game"
+	"github.com/zhanglifan/leaf_server/src/server/gate"
+	"github.com/zhanglifan/leaf_server/src/server/login"
 )
 
 func main() {
@@ -21,6 +20,5 @@ func main() {
 		game.Module,
 		gate.Module,
 		login.Module,
-		web.Module,
 	)
 }

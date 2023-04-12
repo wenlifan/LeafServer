@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"zlf_leaf/src/frame/leaf/gate"
+	"github.com/name5566/leaf/gate"
 )
 
 func init() {

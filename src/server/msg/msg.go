@@ -1,7 +1,7 @@
 package msg
 
 import (
-	"zlf_leaf/src/frame/leaf/network"
+	"github.com/name5566/leaf/network"
 )
 
 var Processor network.Processor

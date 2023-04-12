@@ -1,7 +1,7 @@
 package gate
 
 import (
-	"zlf_leaf/src/server/gate/internal"
+	"github.com/zhanglifan/leaf_server/src/server/gate/internal"
 )
 
 var (

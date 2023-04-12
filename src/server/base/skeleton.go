@@ -1,9 +1,9 @@
 package base
 
 import (
-	"zlf_leaf/src/frame/leaf/chanrpc"
-	"zlf_leaf/src/frame/leaf/module"
-	"zlf_leaf/src/server/conf"
+	"github.com/name5566/leaf/chanrpc"
+	"github.com/name5566/leaf/module"
+	"github.com/zhanglifan/leaf_server/src/server/conf"
 )
 
 func NewSkeleton() *module.Skeleton {
