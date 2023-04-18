@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package Level;
+
+//------------------------------------------------------------------
+// 请求：上报服务器信息
+message ReqUploadServerInfo {
+  string  ServerAddr = 1;        // 服务器地址 Session
+  int64   ServerUID = 2;        // 服务器 UID
+  bool  LaunchSucceed = 3;    // 服务器启动成功
+  string  ServerPasswd = 4;        // 服务器密码：只有持有此密码的匹配客户端才能加入
+  int32   MapID = 5;        // 地图 ID
+
+  int32   ErrorCodeID = 6;        // 错误码 ID
+}
+
+// 响应: 服务器ServerUID
+message RspServerInfo {
+  int64   ServerUID = 1;        // 服务器 UID
+}
+//------------------------------------------------------------------
+// 数据：对局开始时玩家数据
+message LevelPlayerData {
+  string                      AccountID = 1;    // 账号 ID
+  int64                       RoleUID = 2;    // 角色 UID
+
+  string                      RoleName = 3;    // 角色名称
+  int32                       GenderType = 4;    // 性别
+  map<int32, int32>           CustomModelIDs = 5;    // 自定义模型ID(部位+对应ID)
+  map<int32, int32>           CustomColorIDs = 6;    // 自定义颜色ID(部位+对应ID)
+  int32                       RoleLevel = 7;    // 角色等级
+
+  string                      JobNumber = 8;   // 工号
+
+  int32                       TeamID = 10;    // 队伍 ID (>=1)
+  string                      LevelToken = 11;    // 令牌: 用作连接验证
+  int32                       HeroCfgID = 12;    // 英雄 ID
+
+
+  map<int32, int32>           CurWeaponList = 20;      // 当前使用的武器(武器槽+对应武器ID) : 最大数量 5
+  map<int32, int32>           CurEquipmentList = 21;      // 当前使用的防具(防具槽+对应防具ID) ： 最大数量 5
+
+  map<int32, int32>           CurSkillList = 30;       // 快捷键：当前使用的技能列表(绑定Key+对应技能ID) ： 最大数量 255
+}
+
+// 反馈：匹配服发送玩家数据，对局开始
+message RspStartLevel {
+  repeated LevelPlayerData        PlayerList = 1;       // 玩家列表
+  bool                            FillRobot = 2;       // 是否自行补充机器人
+
+  string                          LevelUID = 3;       // 对局标识 ID
+}
+
+// 请求：对局初始化完成后，发送确认包 【之后才会通知玩家加入对局】
+message ReqInitedLevel {
+  bool                            Succeed = 1;    // 是否成功
+  int32                           ErrorCodeID = 2;    // 错误码 ID
+}
+//------------------------------------------------------------------
+// 请求：通知-玩家进入对局
+message ReqPlayerEnter {
+  int64                       RoleUID = 1;    // 角色 UID
+}
+
+// 请求：通知-玩家离开对局（正常、异常情况）
+message ReqPlayerExit {
+  int64                       RoleUID = 1;    // 角色 UID
+  bool                        IsNormalExit = 2;    // 是否正常退出
+}
+//------------------------------------------------------------------
+// 反馈：询问-某个玩家是否可以断线重连
+message QueryPlayerCanConnect {
+  int64                       RoleUID = 1;    // 角色 UID
+}
+
+// 请求：上报-某个玩家是否可以断线重连
+message ReportPlayerCanConnect {
+  int64                       RoleUID = 1;    // 角色 UID
+  bool                        CanConnect = 2;    // 是否可以重连
+}
+//------------------------------------------------------------------
+// 数据：对局结束时玩家数据
+message PlayerLevelEndData {
+  int64                       RoleUID = 1;    // 角色 UID
+  bool                        IsWin = 2;    // 是否胜利  【废弃】
+
+  int32                       HeroCfgID = 10;    // 英雄 ID
+  int32                       Rank = 11;    // 排名
+  int32                       Kills = 12;    // 击杀数
+  int64                       TotalHurt = 13;    // 本局造成的总伤害
+  int32                       Deaths = 14;    // 本局死亡次数（包括一阶段与二阶段）
+  int32                       Heals = 15;    // 本局治疗自己或队友的数值
+  int32                       BuildComponentCount = 16;    // 本局获取的build组件数量
+  int32                       KillsMonsterSimple = 17;    // 本局击杀的小怪总数
+  int32                       KillsMonsterElite = 18;    // 本局击杀的精英怪总数
+  int32                       PhaseOneAreaCount = 19;    // 本局在一阶段中完成的区域数量
+  bool                        RelicObtained = 20;    // 本局是否拾取过圣物
+  int32                       RelicHoldDuration = 21;    // 本局持有圣物的时长
+  int32                       BuildSkillCount = 22;    // 本局凑出的技能数量
+  int32                       Score = 23;    // 赛季得分（排位分）
+
+}
+
+// 请求：对局结束后，发送结果给后端
+message ReqFinishLevel {
+  repeated PlayerLevelEndData     PlayerList = 1;    // 玩家列表
+
+  int32                           LevelTimeStart = 2;    // 比赛开始时间
+  int32                           LevelTimeEnd = 3;    // 比赛结束时间
+}
+
+// 反馈：对局结束结果。 若错误码为 0 才可退出进程，否则打印错误、并重试 ReqFinishLevel。
+message RspFinishLevel {
+  int32                           ErrorCodeID = 1;    // 错误码 ID
+}
+//------------------------------------------------------------------

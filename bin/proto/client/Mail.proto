@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package Mail;
+
+//------------------------------------------------------------------
+// 公用结构
+//------------------------------------------------------------------
+// 游戏状态
+enum EMailState {
+  EMailS_None = 0;        //
+  EMailS_Unread = 1;       // 未读
+  EMailS_Read = 2;         // 已读
+  EMailS_UnGet = 3;        // 未领取
+  EMailS_Get = 4;            //已领取
+}
+
+message MailConfigStruct {
+  int32               ConfigType = 1;            // 预定义配置邮件
+  repeated string     ConfigParameter = 2;            // 预定义配置邮件内容附加的参数(字符串的数组)
+}
+
+message MailCustomStruct {
+  string              CustomTitle = 1;            // 自定义邮件标题
+  string              CustomContent = 2;            // 自定义邮件内容
+}
+
+// 邮件的结构
+message MailStruct {
+  int32               Classify = 1;              // 邮件分类(官方通告，主要邮件 ..... )
+
+  // 配置邮件(从配置表中读取邮件的标题和内容，内容需要的参数从sConfigParameter中读取)
+  MailConfigStruct    TemplateMail = 2;
+  // 自定义邮件
+  MailCustomStruct    CustomMail = 3;
+
+  EMailState          MailState = 4;                // 邮件的状态
+  int64               SenderRoleUID = 5;                // 邮件的发送者
+  int64               SendTime = 6;                // 邮件发送时间
+
+  int64               SerialNumber = 7;                // 邮件编号
+  // tbAttachment = nil;         // 邮件附件, 与奖励发放结构保持一致。
+  bool                Popup = 8;                // 客户端是否弹出邮件
+  EMailState          MailAwardState = 9;                // 邮件领取状态
+}
+
+
+//------------------------------------------------------------------
+// c2s
+//------------------------------------------------------------------
+// 请求: 发送邮件
+// note: 用于邮件测试
+//------------------------------------------------------------------
+message ReqMailTestSendEmail {
+  MailStruct          EmailContent = 1;                // 邮件的内容
+  repeated int64      RoleUIDs = 2;                // 邮件目标
+}
+
+//------------------------------------------------------------------
+// 请求: 获取玩家所有的邮件
+// 返回: RspMailAllEmail 协议
+//------------------------------------------------------------------
+message ReqMailGetAllEmail {
+}
+
+//------------------------------------------------------------------
+// 请求: 领取邮件附件
+// note: 邮件领取附件才能修改未已读状态。所以无附件邮件标记已读，也调用该接口
+// 返回: RspMailAllEmail 协议
+//------------------------------------------------------------------
+message ReqMailGetAttachment {
+  repeated int64          SerialNumbers = 1;                // 邮件的编号
+}
+
+//------------------------------------------------------------------
+// 请求: 删除邮件
+// 返回: RspMailDel 协议
+//------------------------------------------------------------------
+message ReqMailDel {
+  repeated int64          SerialNumbers = 1;                // 需要删除的邮件
+}
+
+//------------------------------------------------------------------
+// 请求: 修改邮件状态
+// 返回: RspMailSetState
+//------------------------------------------------------------------
+message ReqMailSetState {
+  repeated int64          SerialNumbers = 1;                // 邮件的编号
+  EMailState              State = 2;                // 邮件新的状态
+}
+//------------------------------------------------------------------
+// s2c
+//------------------------------------------------------------------
+// 反馈: 玩家所有的邮件
+message RspMailAllEmail {
+  map<int64, MailStruct>  AllEmail = 1;                // 玩家的邮件
+}
+
+// 反馈: 玩家新增加的邮件
+message RspMailAddEmail {
+  repeated MailStruct     NewEmail = 1;                // 玩家的新邮件
+}
+
+// 反馈: 修改邮件状态
+message RspMailSetState {
+  repeated int64          SerialNumbers = 1;                // 邮件的编号
+  EMailState              State = 2;                // 邮件新的状态
+}
+
+// 反馈: 邮件被删除
+message RspMailDel {
+  repeated int64          SerialNumbers = 1;                // 被删除的邮件
+}

@@ -1,0 +1,239 @@
+syntax = "proto3";
+
+package Team;
+
+//------------------------------------------------------------------
+// 公用结构
+//------------------------------------------------------------------
+// 玩家在线状态
+enum ETeamPlayerOnlineState {
+  State_None = 0;        //
+  State_OnLine = 1;        // 在线
+  State_OffLine = 2;        // 离线
+}
+
+// 职务枚举
+enum ETeamTitle {
+  ETeam_TTNone = 0;
+  ETeam_TCaptain = 1;            // 队长
+  ETeam_TMember = 2;            // 队员
+}
+
+// 队伍状态枚举
+enum ETeamState {
+  ETeamMs_None = 0;
+  ETeamMs_Wait = 1;            // 等待中
+  ETeamMs_Match = 2;            // 匹配中
+  ETeamMs_Battle = 3;            // 战斗中
+}
+
+// 队伍中玩家的对局状态
+enum ETeamPlayerLevelState {
+  ETeamP_None = 0;
+  ETeamP_Wait = 1;            // 玩家等待
+  ETeamP_Prepare = 2;            // 玩家准备
+  ETeamP_Level = 3;            // 玩家对局中
+}
+
+// 队伍玩家展示数据
+message TeamPlayerShow {
+  string                      AccountID = 1;        // 账号 ID(平台)
+  int64                       RoleUID = 2;        // 角色 UID
+  string                      RoleName = 3;        // 角色名称
+}
+
+// 玩家队伍数据
+message TeamMemberShow {
+  int64                       RoleUID = 1;        // 角色 UID
+  ETeamTitle                  Title = 2;        // 队员职务
+  bool                        PrepareState = 3;        // 玩家 true准备 false没有准备 的状态(废弃)
+  int32                       Place = 4;        // 玩家在队伍的占位
+  ETeamPlayerLevelState       LevelState = 5;       // 玩家组队状态(废弃PrepareState的使用)
+  ETeamPlayerOnlineState      PlayerState = 6;        // 玩家个人状态
+  string                      RoleName = 7;        // 角色名称
+}
+
+// 队伍邀请细节数据
+message TeamInviteDetailData {
+  int64                       RoleUID = 1;        // 邀请玩家ID
+  string                      RoleName = 2;        // 邀请玩家的名字
+  int64                       Time = 3;        // 邀请时间
+  int64                       TeamID = 4;        // 队伍ID
+}
+
+//------------------------------------------------------------------
+// c2s
+//------------------------------------------------------------------
+
+//------------------------------------------------------------------
+// 请求: 创建组队
+// 结果推送: RspTeamDetailData 消息
+//------------------------------------------------------------------
+message ReqTeamCreateTeam {
+}
+
+//------------------------------------------------------------------
+// 请求: 主动退出队伍
+// TeamID: 退出的队伍ID
+// 结果推送: RspTeamMemberDel 消息
+//------------------------------------------------------------------
+message ReqTeamQuit {
+  int64                       TeamID = 1;        // 队伍ID
+}
+
+//------------------------------------------------------------------
+// 请求: 踢出队伍
+// TeamID: 退出的队伍ID
+// 结果推送: RspTeamMemberDel 消息
+//------------------------------------------------------------------
+message ReqTeamKickOut {
+  int64                       KickRoleUID = 1;        // 被踢出玩家UID
+}
+
+//------------------------------------------------------------------
+// 请求: 获取邀请列表
+// 结果推送: RspTeamInviteList 消息
+//------------------------------------------------------------------
+message ReqTeamGetInviteList {
+}
+
+//------------------------------------------------------------------
+// 请求: 邀请指定玩家加入队伍
+//------------------------------------------------------------------
+message ReqTeamInvitePlayer {
+  int64                       InviteRoleUID = 1;     // 被邀请玩家的UID
+}
+
+//------------------------------------------------------------------
+// 请求: 玩家处理队伍邀请
+// TeamID: 加入的队伍ID
+// 结果推送: 同意加入 推送 RspTeamMemberAdd 消息
+//------------------------------------------------------------------
+message ReqTeamDisposeInvite {
+  int64                       LaunchRoleUID = 1;        // 发起邀请的玩家
+  bool                        Result = 2;        // true: 同意加入 false:拒绝加入
+}
+
+//------------------------------------------------------------------
+// 请求: 玩家准备战斗
+// PrepareState: 玩家设置状态 treu: 准备 false: 取消
+// 结果推送: RspPrepareStateInform 消息
+//------------------------------------------------------------------
+message ReqTeamMemberSetPrepareState {
+  bool                        PrepareState = 1;        // 玩家 true准备 false没有准备 的状态
+}
+
+//------------------------------------------------------------------
+// 请求: 队长转让
+// 结果推送: RspTeamNewCaptainInform 消息
+//------------------------------------------------------------------
+message ReqTeamSetNewCaptain {
+  int64                       NewCaptainRoleUID = 1;        // 新的队长UID
+}
+
+//------------------------------------------------------------------
+// 请求: 推荐好友加入队伍
+// 结果推送: 
+//------------------------------------------------------------------
+message ReqTeamRecommendPlayerJoin {
+  int64                       RecommendRoleUID = 1;          // 推荐玩家的uid
+}
+
+//------------------------------------------------------------------
+// 请求: 处理队员的推荐结果
+// 结果推送: 
+//------------------------------------------------------------------
+message ReqTeamDisposeRecommendPlayerJoin {
+  int64                       RecommendRoleUID = 1;          // 推荐玩家的uid
+  bool                        Result = 2;          // 推荐处理结果 true: 同意 false: 拒绝
+}
+
+//------------------------------------------------------------------
+// 请求: 获取自己的队伍信息 
+// note: 如果玩家没有队伍，给玩家创建队伍
+// 结果推送: 
+//------------------------------------------------------------------
+message ReqTeamGetSelfTeamInfo {
+}
+
+//------------------------------------------------------------------
+// s2c
+//------------------------------------------------------------------
+// 推送: 队伍的详细数据
+message RspTeamDetailData {
+  repeated TeamMemberShow     MemberList = 1;        // 队伍成员列表
+  int64                       TeamID = 2;        // 队伍ID
+  bool                        TeamState = 3;        // true: 开启匹配 false: 取消匹配(废弃)
+  int64                       CaptainRoleUID = 4;        // 队长UID
+  ETeamState                  TeamEState = 5;        // 队伍状态枚举
+}
+
+// 推送: 队伍成员的加入 通知
+message RspTeamMemberAdd {
+  repeated TeamMemberShow     MemberList = 1;        // 队伍成员列表
+  int64                       TeamID = 2;        // 队伍ID
+  int64                       CaptainRoleUID = 3;        // 队长UID
+  ETeamState                  TeamEState = 4;        // 队伍状态枚举
+}
+
+// 推送: 队伍成员的退出 通知
+message RspTeamMemberDel {
+  int64                       RoleUID = 1;        // 退出玩家
+  int64                       TeamID = 2;        // 队伍ID
+}
+
+// 推送: 玩家收到的所有邀请
+message RspTeamInviteList {
+  repeated TeamInviteDetailData  InviteList = 1;        // 玩家的邀请列表
+}
+
+// 推送: 玩家收到的邀请
+message RspTeamNewInvite {
+  TeamInviteDetailData           InviteInfo = 1;        // 玩家收到的邀请
+}
+
+// 推送: 玩家准备状态的改变通知
+message RspTeamPrepareStateInform {
+  int64                       RoleUID = 1;        // 改变状态的玩家
+  bool                        PrepareState = 2;        // true: 开启匹配 false: 取消匹配(废弃)
+  int64                       TeamID = 3;        // 队伍ID
+  ETeamPlayerLevelState       LevelState = 4;       // 玩家组队状态(废弃PrepareState的使用)
+}
+
+// 推送: 匹配状态的改变通知
+message RspTeamMatchStateInform {
+  bool                        CaptainState = 1;        // true: 开启匹配 false: 取消匹配(取消)
+  int64                       TeamID = 2;        // 队伍ID
+  ETeamState                  TeamState = 3;        // 队伍状态-替换参数1
+}
+
+// 推送: 新队长的通知
+message RspTeamNewCaptainInform {
+  int64                       RoleUID = 1;        // (废弃)新的队长UID
+  int64                       TeamID = 2;        // 队伍ID
+  repeated TeamMemberShow     MemberList = 3;        // 队伍成员列表
+  int64                       CaptainRoleUID = 4;        // 队长UID
+  ETeamState                  TeamEState = 5;        // 队伍状态枚举
+}
+
+// 推送：一场战斗结束
+message RspTeamBattleFinish {
+  int64                       TeamID = 1;        // 队伍ID
+  repeated TeamMemberShow     MemberList = 2;        // 队伍成员列表
+  int64                       CaptainRoleUID = 3;        // 队长UID
+  ETeamState                  TeamEState = 4;        // 队伍状态枚举
+}
+
+
+// 推送: 队员离线 在线 状态通知
+message RspTeamMemberOnLineState {
+  int64                       TeamID = 1;        // 队伍ID
+  int64                       RoleUID = 2;        // 状态变化的玩家
+  bool                        OnLineState = 3;        // true： 在线 false: 离线
+}
+
+// 推送: 队员推荐玩家加入队伍
+message RspTeamRecommendPlayerJoin {
+  TeamPlayerShow              RecommendRoleData = 1;          // 被推荐玩家的数据
+  TeamPlayerShow              LaunchRecommendRoleData = 2;          // 发起推荐玩家的数据
+}

@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package Match;
+
+//------------------------------------------------------------------
+// 请求：开始匹配
+message ReqStartMatch {
+  int32           MapID = 1;    // 地图 ID
+  bool            FillPlayer = 2;    // 是否补人
+}
+
+// 反馈：开始匹配
+message RspStartMatch {
+  bool            Succeed = 1;    // 是否成功
+}
+
+// 请求：结束匹配
+message ReqStopMatch {
+
+}
+
+// 反馈：结束匹配
+message RspStopMatch {
+  bool            Succeed = 1;    // 是否成功
+
+}
+//------------------------------------------------------------------
+// 反馈：匹配成功，进入对局
+message RspMatchSuccceed {
+  string          LevelServerAddr = 1;        // 对局服务器地址, IP:Port
+  string          LevelToken = 2;        // 令牌: 用作连接验证
+}
+//------------------------------------------------------------------
+// 反馈：通知玩家可以重连对局
+message RspReconnectLevel {
+  string          LevelServerAddr = 1;        // 对局服务器地址, IP:Port
+  string          LevelToken = 2;        // 令牌: 用作连接验证
+}
+//------------------------------------------------------------------
+// 请求：拒绝重连
+message ReqRejectReconnect {
+
+}
+//------------------------------------------------------------------

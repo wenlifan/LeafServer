@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/name5566/leaf"
-	lconf "github.com/name5566/leaf/conf"
+	"github.com/zhanglifan/leaf_server/leaf"
+	lconf "github.com/zhanglifan/leaf_server/leaf/conf"
 	"github.com/zhanglifan/leaf_server/src/server/conf"
 	"github.com/zhanglifan/leaf_server/src/server/game"
 	"github.com/zhanglifan/leaf_server/src/server/gate"
 	"github.com/zhanglifan/leaf_server/src/server/login"
+	"github.com/zhanglifan/leaf_server/src/server/web"
 )
 
 func main() {
@@ -20,5 +21,6 @@ func main() {
 		game.Module,
 		gate.Module,
 		login.Module,
+		web.Module,
 	)
 }

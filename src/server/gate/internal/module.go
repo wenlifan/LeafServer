@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/name5566/leaf/gate"
+	"github.com/zhanglifan/leaf_server/leaf/gate"
 	"github.com/zhanglifan/leaf_server/src/server/conf"
 	"github.com/zhanglifan/leaf_server/src/server/game"
 	"github.com/zhanglifan/leaf_server/src/server/msg"

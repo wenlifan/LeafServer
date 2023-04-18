@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package Base;
+option go_package = "github.com/zhanglifan/proto/Base";
+
+//------------------------------------------------------------------
+message BaseMsg {
+  string     MsgName = 1;        // 消息名称
+  bytes      MsgBody = 2;        // 消息体
+}
+//------------------------------------------------------------------
+// 心跳包
+message Heartbeat {
+}
+
+//------------------------------------------------------------------

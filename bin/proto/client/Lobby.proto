@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package Lobby;
+import "Struct.proto";
+import "Enum.proto";
+
+//------------------------------------------------------------------
+// 请求： 改变英雄
+message ReqChangeHero {
+  Struct.HeroData        HeroData = 1;
+}
+
+// 反馈： 改变英雄
+message RspChangeHero {
+  Struct.HeroData        HeroData = 1;
+}
+
+//------------------------------------------------------------------
+// 请求 设置玩家所在界面
+message ReqSetHML {
+  Enum.EPlayerUI         Hml = 1;
+}
+
+//------------------------------------------------------------------

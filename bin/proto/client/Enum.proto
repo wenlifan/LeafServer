@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package Enum;
+option go_package = "github.com/zhanglifan/proto/Enum";
+
+//------------------------------------------------------------------
+// 平台类型
+enum EPlatformType {
+  PLATFORM_NONE = 0;
+  PLATFORM_STEAM = 1;    // Steam 平台
+}
+
+// 物品类型
+enum EGoodsType {
+  NONE = 0;
+  Weapon = 1; // 武器
+  Equipment = 2; // 防具
+}
+
+enum EPlayerUI {
+  UI_NONE = 0;
+  UI_LOBBY = 1;        // 大厅
+  UI_FRIEND = 2;        // 好友界面
+}
+//------------------------------------------------------------------
