@@ -24,5 +24,8 @@ func handlePreLobbyReqLogin(args []interface{}) {
 	// 输出收到的消息的内容
 	log.Debug("AccountName: %v", m.GetAccountName())
 
-	a.WriteMsg(&PreLobby.ReqLogin{})
+	a.WriteMsgBase(&PreLobby.RspRoleInfo{
+		RoleName: "zlf1",
+		RoleUID:  11,
+	}, "PreLobby.RspRoleInfo")
 }

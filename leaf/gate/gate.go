@@ -188,9 +188,9 @@ func (a *agent) WriteMsg(msg interface{}) {
 	}
 }
 
-func (a *agent) WriteMsgBase(msg interface{}) {
+func (a *agent) WriteMsgBase(msg interface{}, msgName string) {
 	if a.gate.Processor != nil {
-		data, err := a.gate.Processor.MarshalBase(msg)
+		data, err := a.gate.Processor.MarshalBase(msg, msgName)
 		if err != nil {
 			log.Error("marshal message %v error: %v", reflect.TypeOf(msg), err)
 			return

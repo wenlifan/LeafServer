@@ -152,6 +152,9 @@ func (p *Processor) UnmarshalBase(data []byte) (interface{}, error) {
 
 	// msg
 	i := p.msgNameMap[msgName]
+	if i == nil {
+		return nil, errors.New("protobuf no register: " + msgName)
+	}
 	if i.msgRawHandler != nil {
 		id := p.msgID[i.msgType]
 		return MsgRaw{id, msgData[:]}, nil
@@ -189,16 +192,18 @@ func (p *Processor) Unmarshal(data []byte) (interface{}, error) {
 }
 
 // goroutine safe
-func (p *Processor) MarshalBase(msg interface{}) ([][]byte, error) {
-	msgType := reflect.TypeOf(msg)
+func (p *Processor) MarshalBase(msg interface{}, msgName string) ([][]byte, error) {
+	/*
+		msgType := reflect.TypeOf(msg)
 
-	// id
-	_id, ok := p.msgID[msgType]
-	if !ok {
-		err := fmt.Errorf("message %s not registered", msgType)
-		return nil, err
-	}
-	msgName := p.msgInfo[_id].msgName
+		// id
+		_id, ok := p.msgID[msgType]
+		if !ok {
+			err := fmt.Errorf("message %s not registered", msgType)
+			return nil, err
+		}
+		msgName := p.msgInfo[_id].msgName
+	*/
 	// data
 	data, err := proto.Marshal(msg.(proto.Message))
 
@@ -209,11 +214,11 @@ func (p *Processor) MarshalBase(msg interface{}) ([][]byte, error) {
 			MsgBody: data,
 		}
 	*/
-	baseMsg := Base.BaseMsg{
+	baseMsg := &Base.BaseMsg{
 		MsgName: msgName,
 		MsgBody: data,
 	}
-	baseData, err := proto.Marshal(&baseMsg)
+	baseData, err := proto.Marshal(baseMsg)
 	return [][]byte{baseData}, err
 }
 

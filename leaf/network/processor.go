@@ -8,5 +8,5 @@ type Processor interface {
 	UnmarshalBase(data []byte) (interface{}, error)
 	// must goroutine safe
 	Marshal(msg interface{}) ([][]byte, error)
-	MarshalBase(msg interface{}) ([][]byte, error)
+	MarshalBase(msg interface{}, msgName string) ([][]byte, error)
 }
