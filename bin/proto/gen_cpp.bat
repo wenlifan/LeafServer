@@ -37,10 +37,10 @@
 @REM echo convert client\Chat.proto...
 @REM protoc.exe --proto_path=..\client --cpp_out=..\..\dsgame\Source\DSGame\Network\HandlerClient\Proto      Chat.proto
 
-protoc.exe --proto_path=.\share --go_out=..\..\vendor Base.proto
-protoc.exe --proto_path=.\client --go_out=..\..\vendor Struct.proto
-protoc.exe --proto_path=.\client --go_out=..\..\vendor Enum.proto
-protoc.exe --proto_path=.\client --go_out=..\..\vendor PreLobby.proto
+protoc.exe --proto_path=.\share --go_out=..\..\..\..\pkg\mod Base.proto
+protoc.exe --proto_path=.\client --go_out=..\..\..\..\pkg\mod Struct.proto
+protoc.exe --proto_path=.\client --go_out=..\..\..\..\pkg\mod Enum.proto
+protoc.exe --proto_path=.\client --go_out=..\..\..\..\pkg\mod PreLobby.proto
 
 echo finish!!!
 pause
