@@ -13,7 +13,6 @@ type Module struct {
 
 func (m *Module) Run(closeSig chan bool) {
 	log.Release("game web Run")
-	//TODO implement me
 	//panic("implement me")
 	log.Release("Web listener: %d", 11102)
 	err := http.ListenAndServe(":11102", nil)

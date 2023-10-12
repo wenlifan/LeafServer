@@ -17,4 +17,6 @@ var (
 	ListenAddr      string
 	ConnAddrs       []string
 	PendingWriteNum int
+
+	Node string
 )

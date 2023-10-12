@@ -2,5 +2,6 @@
 	"LogLevel": "debug",
 	"LogPath": "./run/game/log",
 	"TCPAddr": "0.0.0.0:3563",
-	"MaxConnNum": 20000
+	"MaxConnNum": 20000,
+	"Node": "main"
 }

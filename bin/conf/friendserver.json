@@ -2,5 +2,6 @@
 	"LogLevel": "debug",
 	"LogPath": "./run/friend/log",
 	"TCPAddr": "0.0.0.0:3564",
-	"MaxConnNum": 20000
+	"MaxConnNum": 20000,
+	"Node": "friend"
 }

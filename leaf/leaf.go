@@ -30,7 +30,7 @@ func Run(mods ...module.Module) {
 	module.Init()
 
 	// cluster
-	cluster.Init()
+	//cluster.Init()
 
 	// console
 	console.Init()

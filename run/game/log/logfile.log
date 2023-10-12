@@ -1,0 +1,306 @@
+2023-06-27T19:49:10.201+0800	INFO	Leaf [[1.1.3]] starting up
+2023-06-27T19:49:10.208+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-06-27T19:49:10.208+0800	INFO	Web listener: [[11102]]
+2023-06-27T19:52:13.178+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-13T20:35:36.110+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-13T20:35:36.118+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-13T20:35:36.118+0800	INFO	Web listener: [[11102]]
+2023-07-13T20:44:31.495+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:44:31.496+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:44:31.647+0800	DEBUG	unmarshal message error: %v[[proto: cannot parse invalid wire-format data]]
+2023-07-13T20:44:55.197+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:44:55.197+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:44:55.200+0800	DEBUG	unmarshal message error: %v[[proto: cannot parse invalid wire-format data]]
+2023-07-13T20:45:01.750+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:45:01.751+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:45:01.752+0800	DEBUG	unmarshal message error: %v[[proto: cannot parse invalid wire-format data]]
+2023-07-13T20:47:38.072+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:47:38.073+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:47:42.378+0800	DEBUG	AccountName: %v[[]]
+2023-07-13T20:47:42.410+0800	DEBUG	unmarshal message error: %v[[protobuf no register: PreLobby.ReqEnterLobby]]
+2023-07-13T20:48:03.034+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:48:03.034+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:48:06.264+0800	DEBUG	AccountName: %v[[]]
+2023-07-13T20:48:28.269+0800	DEBUG	unmarshal message error: %v[[protobuf no register: PreLobby.ReqEnterLobby]]
+2023-07-13T20:50:50.279+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-13T20:51:02.703+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-13T20:51:02.713+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-13T20:51:02.713+0800	INFO	Web listener: [[11102]]
+2023-07-13T20:51:06.702+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:51:06.702+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:51:26.608+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-13T20:51:35.401+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-13T20:51:35.408+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-13T20:51:35.408+0800	INFO	Web listener: [[11102]]
+2023-07-13T20:51:39.517+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:51:39.517+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:51:39.518+0800	DEBUG	AccountName: %v[[]]
+2023-07-13T20:51:39.538+0800	DEBUG	unmarshal message error: %v[[protobuf no register: PreLobby.ReqEnterLobby]]
+2023-07-13T20:52:19.200+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-13T20:52:46.600+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-13T20:52:46.607+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-13T20:52:46.608+0800	INFO	Web listener: [[11102]]
+2023-07-13T20:58:00.128+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-13T20:58:09.442+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-13T20:58:09.451+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-13T20:58:09.451+0800	INFO	Web listener: [[11102]]
+2023-07-13T20:58:14.106+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:58:14.106+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:58:17.499+0800	DEBUG	AccountName: %v[[]]
+2023-07-13T20:58:17.518+0800	DEBUG	unmarshal message error: %v[[protobuf no register: PreLobby.ReqEnterLobby]]
+2023-07-13T20:58:34.543+0800	INFO	checkReceivedHeader Client nMagicNumber: [[1215496819]]
+2023-07-13T20:58:34.543+0800	INFO	checkReceivedHeader Client nVersion: [[1]]
+2023-07-13T20:58:34.544+0800	DEBUG	AccountName: %v[[]]
+2023-07-13T20:58:47.663+0800	DEBUG	unmarshal message error: %v[[protobuf no register: PreLobby.ReqEnterLobby]]
+2023-07-13T20:58:47.681+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-19T20:09:03.530+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-19T20:09:03.585+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-19T20:09:03.585+0800	INFO	Web listener: [[11102]]
+2023-07-19T20:09:06.487+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-26T20:51:46.131+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-26T20:51:46.139+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-26T20:51:46.139+0800	INFO	Web listener: [[11102]]
+2023-07-27T19:45:39.515+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-27T19:45:45.775+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-27T19:45:45.781+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-27T19:45:45.781+0800	INFO	Web listener: [[11102]]
+2023-07-27T19:46:20.561+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-07-27T20:32:44.643+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-27T20:32:44.706+0800	FATAL	cluster config no find self: [[main]]
+2023-07-27T20:33:08.974+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-27T20:33:53.891+0800	FATAL	cluster config no find self: [[main]]
+2023-07-27T20:34:15.123+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-27T20:34:34.094+0800	FATAL	cluster config no find self: [[main]]
+2023-07-31T20:17:25.185+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-31T20:18:06.016+0800	FATAL	cluster config no find self: [[main]]
+2023-07-31T20:22:50.360+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-31T20:22:50.366+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-07-31T20:22:50.366+0800	FATAL	cluster config no find self: [[main]]
+2023-07-31T20:32:03.059+0800	INFO	Leaf [[1.1.3]] starting up
+2023-07-31T20:32:18.520+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-07-31T20:32:35.960+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-07-31T20:32:35.960+0800	INFO	Web listener: [[11102]]
+2023-07-31T20:32:35.974+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-08-01T08:26:46.505+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:26:46.511+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:26:46.511+0800	DEBUG	jsonData: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:27:10.022+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:27:10.028+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:27:10.028+0800	DEBUG	clusterConf: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:29:14.052+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:29:18.513+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:29:45.214+0800	DEBUG	clusterConf: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:31:21.798+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:31:21.804+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:31:21.804+0800	DEBUG	clusterConf: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:32:09.956+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:32:09.962+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:32:09.962+0800	DEBUG	clusterConf: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:32:12.005+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:3564]] addr:%!s(MISSING)
+2023-08-01T08:33:02.245+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:33:02.251+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:33:02.252+0800	DEBUG	clusterConf: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:33:02.304+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T08:33:02.304+0800	INFO	Web listener: [[11102]]
+2023-08-01T08:33:02.304+0800	FATAL	[[listen tcp 0.0.0.0:3563: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.]]
+2023-08-01T08:34:13.262+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:34:16.742+0800	DEBUG	jsonData: [[{
+  "node" : {
+    "friend": "0.0.0.0:3564",
+    "main": "0.0.0.0:3563"
+  }
+}
+]]
+2023-08-01T08:34:17.914+0800	DEBUG	clusterConf: [[map[node:map[friend:0.0.0.0:3564 main:0.0.0.0:3563]]]]
+2023-08-01T08:34:28.334+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T08:34:28.334+0800	FATAL	[[listen tcp 0.0.0.0:3563: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.]]
+2023-08-01T08:35:16.706+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:35:16.712+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:35:16.713+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T08:35:16.713+0800	INFO	Web listener: [[11102]]
+2023-08-01T08:35:35.866+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-08-01T08:36:18.680+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:36:20.415+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:36:26.977+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T08:36:26.977+0800	INFO	Web listener: [[11102]]
+2023-08-01T08:36:38.632+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-08-01T08:41:09.890+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:41:12.834+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:41:47.414+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:13564]] addr:%!s(MISSING)
+2023-08-01T08:42:04.072+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:42:04.078+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:42:06.106+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:13564]] addr:%!s(MISSING)
+2023-08-01T08:44:18.688+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:44:18.694+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:44:20.734+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:13564]] addr:%!s(MISSING)
+2023-08-01T08:51:16.392+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:51:16.398+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:51:16.398+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T08:51:16.398+0800	INFO	Web listener: [[11102]]
+2023-08-01T08:51:41.316+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T08:51:44.431+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T08:51:47.451+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T08:51:47.451+0800	INFO	Web listener: [[11102]]
+2023-08-01T09:09:12.753+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T09:09:12.760+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T09:09:12.761+0800	DEBUG	connect rpc server: [[0.0.0.0:13564]]
+2023-08-01T09:09:18.913+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T09:09:18.913+0800	INFO	Web listener: [[11102]]
+2023-08-01T09:09:43.076+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T09:09:43.084+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T09:09:58.451+0800	DEBUG	connect rpc server: [[0.0.0.0:13564]]
+2023-08-01T09:10:08.368+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T09:10:08.368+0800	INFO	Web listener: [[11102]]
+2023-08-01T09:10:10.411+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:13564]] addr:%!s(MISSING)
+2023-08-01T09:10:25.827+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-08-01T09:10:35.003+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T09:10:35.012+0800	DEBUG	Cluster Config: [[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+]]
+2023-08-01T09:10:35.012+0800	DEBUG	connect rpc server: [[0.0.0.0:13564]]
+2023-08-01T09:12:05.856+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T09:12:42.038+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T09:12:42.047+0800	DEBUG	Cluster Config:%s nodeName:[[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+ main]]
+2023-08-01T09:12:42.047+0800	DEBUG	connect rpc server node:%s, addr:%s[[main 0.0.0.0:13563]]
+2023-08-01T09:12:42.047+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T09:13:06.212+0800	INFO	Web listener: [[11102]]
+2023-08-01T09:15:45.021+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T09:15:45.028+0800	DEBUG	Cluster Config:%s nodeName:[[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+ main]]
+2023-08-01T09:15:46.961+0800	DEBUG	connect rpc server node:%s, addr:%s[[friend 0.0.0.0:13564]]
+2023-08-01T09:15:46.961+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T09:15:53.829+0800	INFO	Web listener: [[11102]]
+2023-08-01T09:15:53.829+0800	DEBUG	connect rpc server node:%s, addr:%s[[friend 0.0.0.0:13564]]
+2023-08-01T09:16:05.009+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:13564]] addr:%!s(MISSING)
+2023-08-01T09:16:05.009+0800	ERROR	connect rpc server fail node:[[friend 0.0.0.0:13564]] addr:%!s(MISSING)
+2023-08-01T09:22:18.021+0800	INFO	Leaf closing down (signal: [[interrupt]])
+2023-08-01T09:32:24.139+0800	INFO	Leaf [[1.1.3]] starting up
+2023-08-01T09:32:24.145+0800	DEBUG	Cluster Config:%s nodeName:[[{
+  "node" : {
+    "friend": "0.0.0.0:13564",
+    "main": "0.0.0.0:13563"
+  }
+}
+ main]]
+2023-08-01T09:32:24.145+0800	INFO	game web Run%!(EXTRA []interface {}=[[]])
+2023-08-01T09:32:24.146+0800	WARN	connect rpc server node:[[main 0.0.0.0:13563]], addr:%!s(MISSING)
+2023-08-01T09:32:24.146+0800	INFO	Web listener: [[11102]]
+2023-08-01T09:32:24.146+0800	WARN	connect rpc server node:[[main 0.0.0.0:13563]], addr:%!s(MISSING)
+2023-08-01T09:32:45.692+0800	INFO	Leaf closing down (signal: [[interrupt]])

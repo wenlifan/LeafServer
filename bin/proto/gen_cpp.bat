@@ -42,5 +42,7 @@ protoc.exe --proto_path=.\client --go_out=..\..\..\..\pkg\mod Struct.proto
 protoc.exe --proto_path=.\client --go_out=..\..\..\..\pkg\mod Enum.proto
 protoc.exe --proto_path=.\client --go_out=..\..\..\..\pkg\mod PreLobby.proto
 
+protoc.exe --proto_path=.\cluster --go_out=..\..\..\..\pkg\mod CFriend.proto
+
 echo finish!!!
 pause
