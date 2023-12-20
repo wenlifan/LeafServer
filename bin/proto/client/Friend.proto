@@ -1,0 +1,222 @@
+syntax = "proto3";
+
+package Friend;
+// import "Enum.proto";
+
+//------------------------------------------------------------------
+// 公用结构
+//------------------------------------------------------------------
+// 游戏状态
+enum EFriendGameState {
+  State_None = 0;        //
+  State_Lobby = 1;        // 大厅中
+  State_Match = 2;        // 匹配中
+  State_Level = 3;        // 对局中
+  State_OffLine = 4;        // 离线中
+}
+
+message FriendBaseStruct {
+  string                      AccountID = 1;        // 账号 ID(平台)
+  int64                       RoleUID = 2;        // 角色 UID
+  string                      RoleName = 3;        // 角色名称
+  EFriendGameState            GameState = 4;        // 游戏状态
+  int64                       OfflineTime = 5;        // 玩家离线时间(UTC时间戳)
+  int64                       OnlineTime = 6;        // 玩家上线时间(UTC时间戳)
+  int64                       TeamID = 7;        // 队伍ID (==0 玩家无队伍)
+  string                      Remark = 8;        // 备注
+}
+
+// 备注信息
+message RemarkStruct {
+  int64                       RoleUID = 1;        // 角色 UID
+  string                      Remark = 2;        // 备注
+}
+
+// 好友列表类型
+enum EFriendType {
+  FT_NONE = 0;
+  FT_Friend = 1;            // 好友
+  FT_Apply = 2;            // 申请
+  FT_Black = 3;            // 黑名单
+  FT_Recommend = 4;            // 推荐
+  FT_Chase = 5;            // 提出申请
+}
+
+enum EApplyResult {
+  AR_NONE = 0;
+  AR_Pass = 1;            // 通过申请
+  AR_Reject = 2;            // 拒绝申请
+}
+
+//------------------------------------------------------------------
+// c2s
+//------------------------------------------------------------------
+// 请求: 列表获取
+// ListType: 列表类型, 好友、黑名单、推荐好友、好友申请列表
+// Cursor: 游标，发送节点标记。客户端初始发送 0 到服务器，后续使用 RspFriendList.Cursor 的值。
+// 服务器处理逻辑: 服务器已经 EFriendType 区分获取数据的类型，然后使用 Cursor 表述已经获取的位置，继续获取剩余数据。
+// 返回：RspFriendList 协议，客户端每次获取列表成员 n 个，但是服务器返回数量并不一定为 n。
+//------------------------------------------------------------------
+message ReqFriendAcquireList {
+  EFriendType                 ListType = 1;        // 列表类型
+  int32                       Cursor = 2;        // 游标(默认值0, ReqLogin.Cursor = RspFriendList.Cursor)(废弃-服务器主动推送)
+}
+
+//------------------------------------------------------------------
+// 请求: 平台好友筛选拥有游戏的玩家
+// PlatformIDs: 玩家平台的账号
+// 服务器处理逻辑: 服务器依次判断玩家是否有游戏账号, 如果有游戏账号，读取玩家 FriendBaseStruct 数据。
+// 返回: RspFriendPlatformShow 协议，将筛选出来的结果回复。
+//------------------------------------------------------------------
+message ReqFriendSelectedPlatformOwns {
+  //    map<int32, string>          PlatformIDs     = 1;        // 平台账号
+  repeated string               PlatformIDs = 1;        // 平台账号
+}
+
+//------------------------------------------------------------------
+// 请求: 申请将玩家添加到指定列表
+// ListType: 列表的类型
+// RoleUID: 角色ID
+// 服务器处理逻辑: 已经列表类型不同处理逻辑不一样。 好友列表: 发起申请；黑名单: 将玩家直接加入黑名单
+// 返回: 
+//        好友列表-无返回。被申请了将收到: RsqListAdd 消息
+//        黑名单: 加入成功，玩家将收到 RsqListAdd 消息
+//------------------------------------------------------------------
+message ReqFriendApplyToJoin {
+  EFriendType                  ListType = 1;        // 列表类型(好友/黑名单)
+  int64                       RoleUID = 2;        // 角色 UID
+}
+
+//------------------------------------------------------------------
+// 请求: 玩家从列表中移除(移除好友，移除黑名单)
+// ListType: 列表的类型
+// RoleUID: 角色ID
+// 服务器处理逻辑:
+// 返回:
+//      好友: 执行好友删除, RsqRemove 通知移除的好友。 被移除玩家也会收到 RsqRemove 消息
+//      黑名单: 执行黑名单输出, RsqRemove 通知移除黑名单。
+//------------------------------------------------------------------
+message ReqFriendRemove {
+  EFriendType                  ListType = 1;        // 列表类型(好友/黑名单)
+  int64                       RoleUID = 2;        // 角色 UID
+}
+
+//------------------------------------------------------------------
+// 请求: 好友申请处理
+// RoleUID: 角色ID
+// Result: 申请结果
+// 服务器处理逻辑:
+// 返回:
+//      EApplyResult.Pass: 双方收到 RsqListAdd 消息 和 RsqRemove 消息
+//      EApplyResult.Refuse: 双方收到 RsqRemove 消息
+//------------------------------------------------------------------
+message ReqFriendDisApply {
+  int64                       RoleUID = 1;        // 角色 UID
+  EApplyResult                 Result = 2;        // 申请结果
+}
+
+//------------------------------------------------------------------
+// 请求: 获取玩家备注信息(废弃-获取好友列表同时发送玩家备注)
+// ListType: 列表的类型
+// RoleUIDs: 需要获取的玩家id
+// 服务器处理逻辑: 
+// 返回:
+//        RspFriendRemark 消息
+//------------------------------------------------------------------
+message ReqFriendGetRemark {
+  EFriendType                  ListType = 1;        // 列表类型
+  repeated int64               RoleUIDs = 2;        // 角色 UID
+}
+
+//------------------------------------------------------------------
+// 请求: 设置玩家备注信息
+// ListType: 列表的类型
+// RoleUID:  玩家id
+// 服务器处理逻辑: 
+// 返回:
+//        RspFriendRemark 消息
+//------------------------------------------------------------------
+message ReqFriendSetRemark {
+  EFriendType                  ListType = 1;        // 列表类型
+  int64                        RoleUID = 2;        // 角色 UID
+  string                       Content = 3;        // 备注内容长度
+}
+
+//------------------------------------------------------------------
+// 请求: 按玩家名字查询玩家信息
+// Name: 被查询玩家名字
+// 服务器处理逻辑: 
+// 返回:
+//        RspFriendFindResult 消息
+//------------------------------------------------------------------
+message  ReqFriendQuery {
+  string                       Name = 1;        // 玩家名字(废弃)
+  int64                        RoleUID = 2;        // 角色的UID(废弃)
+  string                       QueryKey = 3;        // 查询的玩家key(玩家UID 或者 玩家名字)
+}
+
+//------------------------------------------------------------------
+// 请求: 玩家设置自己的状态(State_None 和 State_OffLine 状态)
+// 服务器处理逻辑: 
+// 返回:
+//------------------------------------------------------------------
+message ReqFriendActiveSettingState {
+  EFriendGameState            ActiveGameState = 1;        // 游戏状态
+}
+
+//------------------------------------------------------------------
+// 请求: 获取玩家主动设置的状态
+// 服务器处理逻辑: 
+// 返回:
+//------------------------------------------------------------------
+message ReqFriendGetActiveState {
+}
+
+//------------------------------------------------------------------
+// s2c
+//------------------------------------------------------------------
+// 反馈: 好友系统列表(好友，黑名单，推荐好友)
+message RspFriendList {
+  EFriendType                  ListType = 1;        // 列表类型
+  repeated FriendBaseStruct    FriendList = 2;        // 玩家数据
+  int32                        Cursor = 3;        // 游标( == 0, 已经返回全部列表. ReqLogin.Cursor = RspFriendList.Cursor)
+}
+
+// 反馈: 平台好友的展示数据
+message RspFriendPlatformShow {
+  repeated FriendBaseStruct    FriendList = 1;        // 玩家数据
+}
+
+// 反馈: 列表新增加(申请添加好友通过、添加黑名单、被申请、推荐好友新增加)
+message RspFriendListAdd {
+  EFriendType                  ListType = 1;        // 列表类型
+  repeated FriendBaseStruct    FriendList = 2;        // 玩家数据
+}
+
+// 反馈: 列表刷新(废弃-使用RspFriendListAdd)
+message RspFriendListUpdate {
+  EFriendType                  ListType = 1;        // 列表类型
+  repeated FriendBaseStruct    FriendList = 2;        // 玩家数据
+}
+
+// 反馈: 列表移除(移除好友，移除黑名单, 移除申请列表)
+message RspFriendRemove {
+  EFriendType                  ListType = 1;        // 列表类型(好友/黑名单)
+  repeated int64               RoleUIDs = 2;        // 角色 UID
+}
+
+// 反馈: 玩家的备注信息
+message RspFriendRemark {
+  EFriendType                  ListType = 1;        // 列表类型(好友/黑名单)
+  repeated RemarkStruct        Remarks = 2;        // 玩家的备注
+}
+
+// 反馈: 玩家查询结果
+message RspFriendQueryResult {
+  FriendBaseStruct            FindShow = 1;       // 查询结果
+}
+
+// 反馈: 玩家 主动设置状态推送
+message RspFriendActiveState {
+  EFriendGameState            ActiveGameState = 1;        // 游戏状态
+}

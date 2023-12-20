@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package CFriend;
+option go_package = "github.com/zhanglifan/proto/CFriend";
+
+//------------------------------------------------------------------
+message CFriendAdd {
+  string     RoleUID = 1;        // 玩家UID
+  string     FriendUID = 2;        // 添加好友UID
+  string     ListType = 3;        // 添加列表类型
+}
+
+//------------------------------------------------------------------

@@ -1,7 +1,7 @@
 package game
 
 import (
-	"zlf_leaf/src/server/game/internal"
+	"github.com/zhanglifan/leaf_server/src/server/game/internal"
 )
 
 var (

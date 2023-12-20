@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package Season;
+
+//------------------------------------------------------------------
+// 公用结构
+//------------------------------------------------------------------
+// 赛季状态
+enum ESeasonPeriodState {
+  ESeason_None = 0;
+  ESeason_Open = 1;            // 开启状态
+  ESeason_Close = 2;            // 关闭状态
+  ESeason_Award = 3;            // 奖励状态
+  Eseason_Wait = 4;            // 等待开启
+}
+
+// 排行榜玩家展示数据
+message SeasonPlayerShow {
+  string                      AccountID = 1;        // 账号 ID(平台)
+  int64                       RoleUID = 2;        // 角色 UID
+  string                      RoleName = 3;        // 角色名称
+  int32                       Rank = 4;        // 名次
+  int32                       Score = 5;        // 赛季积分
+  int32                       NumberGames = 6;        // 比赛场次
+}
+
+//------------------------------------------------------------------
+// c2s
+//------------------------------------------------------------------
+// 请求: 获取指定排行榜数据
+// PeriodVersion: 获取哪一个赛季的数据
+// CacheVersion: 客户端初始发送 0 ,后续使用 RspSendSeasonRankData.CacheVersion 的值。
+message ReqSeasonAcquireSeasonRankData {
+  int32                       Page = 1;        // 指定的页面
+}
+
+// 请求: 获赛季详细数据
+// RspSendPeriodData 返回数据
+message ReqSeasonAcquireSeansonDetails {
+}
+
+//------------------------------------------------------------------
+// s2c
+//------------------------------------------------------------------
+// 推送: 推送排行榜数据
+// CacheVersion: 当前赛季的排行榜需要定期生成。服务器会缓存近期生成的N次数据。CacheVersion 用于标识
+//      用于标识使用的服务器哪一个版本, 如果CacheVersion 与客户端缓存的版本不一致, 应该清理之前收到的数据.
+message RspSeasonSendRankData {
+  repeated SeasonPlayerShow   RankList = 1;        // 排行榜
+  int32                       Page = 2;        // 排行榜页数
+  int32                       SumPage = 3;        // 排行榜总页数
+}
+
+// 推送: 赛季数据
+message RspSeasonSendPlayerPeriodData {
+  ESeasonPeriodState          State = 1;        // 赛季状态
+  int32                       Score = 2;        // 玩家当前积分
+  int32                       GradingState = 3;        // -1: 完成定级赛 >=0 定级赛参与场数
+  int32                       Ranking = 4;        // 排行榜名次 0: 未上榜
+  int32                       PeriodVersion = 5;        // 赛季版本
+}
+
+// 推送: 赛季状态变化
+message RspSeasonStateChange {
+  ESeasonPeriodState          State = 1;        // 赛季状态
+  int32                       PeriodVersion = 2;        // 赛季版本
+}

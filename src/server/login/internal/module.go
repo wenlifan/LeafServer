@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"zlf_leaf/src/frame/leaf/module"
-	"zlf_leaf/src/server/base"
+	"github.com/zhanglifan/leaf_server/leaf/module"
+	"github.com/zhanglifan/leaf_server/src/server/base"
 )
 
 var (

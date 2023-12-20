@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package Item;
+
+//------------------------------------------------------------------
+// 公用结构
+//------------------------------------------------------------------
+enum EItemType {
+  EItem_NONE = 0;
+  EItem_HeroSkin = 1;            // 英雄皮肤
+  EItem_HeroHeadDress = 2;            // 英雄头饰
+  EItem_HeroPendant = 3;            // 英雄挂饰
+  EItem_HeroVoice = 4;            // 英雄语言
+  EItem_ParasiteSkin = 5;            // 寄生兽皮肤
+  EItem_WeaponSkin = 6;            // 枪皮肤
+  EItem_Head = 7;            // 账号头像
+  EItem_Currency = 8;            // 货币
+}
+
+message ItemStruct {
+  EItemType                   ItemType = 1;            // 物品类型
+  int32                       ItemId = 2;            // 道具ID
+  int64                       ItemNum = 3;            // 道具数量
+}
+//------------------------------------------------------------------
+// c2s
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+// 请求: 获取玩家所有的物品列表
+// 返回: RspItemClienGetList 协议
+//------------------------------------------------------------------
+message ReqItemGetAllList {
+}
+
+//------------------------------------------------------------------
+// 请求: 获取玩家所有的物品列表
+// 返回: RspItemClienGetList 协议
+//------------------------------------------------------------------
+message ReqItemGetTypeList {
+  EItemType                   ItemType = 1;            // 物品类型
+}
+
+//------------------------------------------------------------------
+// 请求: 测试接口-发放物品
+// 返回: RspItemClienGetList 协议
+//------------------------------------------------------------------
+message ReqItemTestInterfaceGiftItems {
+  EItemType                   ItemType = 1;            // 物品类型
+  int32                       ItemId = 2;            // 物品ID
+  int32                       ItemNum = 3;            // 物品数量
+}
+//------------------------------------------------------------------
+// s2c
+//------------------------------------------------------------------
+// 反馈: 新增物品
+message RspItemAdd {
+  repeated ItemStruct         AddItemList = 1;            // 新增的物品列表
+}
+
+// 反馈: 扣除物品
+message RspItemDeduct {
+  repeated ItemStruct         DeductItemList = 1;            // 扣除的物品列表
+}
+
+// 反馈: 客户端获取物品列表
+message RspItemClienGetList {
+  repeated ItemStruct         ItemList = 1;                  // 玩家的物品列表
+}

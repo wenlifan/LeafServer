@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package Struct;
+option go_package = "github.com/zhanglifan/proto/Struct";
+
+//------------------------------------------------------------------
+// 数据：物品 （武器、防具、道具）
+message ItemData {
+  int32           ItemID = 1; // 物品 ID
+  int32           ItemCount = 2; // 物品数量
+  int32           ItemLevel = 3; // 物品等级
+}
+
+// 数据：技能
+message SkillData {
+  int32           SkillID = 1; // 技能 ID
+  int32           SkillLevel = 2; // 技能等级
+}
+
+// 数据：英雄易变数据
+message HeroExtraData {
+  repeated ItemData           WeaponList = 10;       // 物品：武器列表
+  repeated ItemData           EquipmentList = 11;       // 物品：防具列表
+  repeated ItemData           ItemList = 12;       // 物品：道具列表
+  repeated SkillData          SkillList = 13;       // 技能列表
+
+  map<int32, int32>           CurWeaponList = 20;      // 当前使用的武器(武器槽+对应武器ID) : 最大数量 5
+  map<int32, int32>           CurEquipmentList = 21;      // 当前使用的防具(防具槽+对应防具ID) ： 最大数量 5
+
+  map<int32, int32>           CurSkillList = 30;      // 快捷键：当前使用的技能列表(绑定Key+对应技能ID) ： 最大数量 255
+}
+
+// 数据： 英雄数据
+message HeroData {
+  int32                       HeroCfgID = 1;    // 数据配置 ID --- FDSCharacterCustomEquipTable
+
+  int32                       GenderType = 2;    // 性别
+  map<int32, int32>           CustomModelIDs = 3;    // 自定义模型ID(部位+对应ID)
+  map<int32, int32>           CustomColorIDs = 4;    // 自定义颜色ID(部位+对应ID)
+
+  HeroExtraData               HeroExtraData = 5;    // 英雄易变数据
+}
+//------------------------------------------------------------------

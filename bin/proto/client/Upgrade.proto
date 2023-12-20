@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package Upgrade;
+import "Enum.proto";
+
+//------------------------------------------------------------------
+// 请求：装备物品--武器、防具
+message ReqEquipGoods {
+  Enum.EGoodsType     GoodsType = 1;    // 物品类型
+  int32               SlotID = 2;    // 槽位 ID
+  int32               GoodsID = 3;    // 物品 ID    -- 0: 代表卸载
+}
+
+// 反馈：装备物品--武器、防具
+message RspEquipGoods {
+  Enum.EGoodsType     GoodsType = 1;    // 物品类型
+  int32               SlotID = 2;    // 槽位 ID
+  int32               GoodsID = 3;    // 物品 ID    -- 0: 代表卸载
+}
+//------------------------------------------------------------------
+// 请求：绑定快捷键--技能
+message ReqBindKey {
+  int32               KeyID = 1;    // 键位 ID
+  int32               SkillID = 2;    // 技能 ID    -- 0: 代表卸载
+}
+
+// 反馈：绑定快捷键--技能
+message RspBindKey {
+  int32               KeyID = 1;    // 键位 ID
+  int32               SkillID = 2;    // 技能 ID    -- 0: 代表卸载
+}
+//------------------------------------------------------------------

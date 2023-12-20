@@ -1,1 +1,5 @@
 .idea/**
+vender/**
+vendor
+run/log/*
+*.log

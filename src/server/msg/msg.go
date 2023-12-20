@@ -1,11 +1,12 @@
 package msg
 
 import (
-	"zlf_leaf/src/frame/leaf/network"
+	"github.com/zhanglifan/leaf_server/leaf/network/protobuf"
+	"github.com/zhanglifan/proto/PreLobby"
 )
 
-var Processor network.Processor
+var Processor = protobuf.NewProcessor()
 
 func init() {
-
+	Processor.Register(&PreLobby.ReqLogin{}, "PreLobby.ReqLogin")
 }

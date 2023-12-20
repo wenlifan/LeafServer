@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package DBData;
+import "../client/PreLobby.proto";
+
+//------------------------------------------------------------------
+// DS 信息
+message DSData {
+  //int64       DSUID                   = 1;        // 服务器 UID
+  string      ServerAddr = 1;        // 服务器地址
+
+
+}
+
+//------------------------------------------------------------------
+// 玩家数据
+// TODO: 之后拆分
+message PlayerData {
+  PreLobby.PlayerBaseInfo     BaseInfo = 1;    // 基础信息
+  int32                       GameState = 2;    // 游戏状态
+
+}
+
+//------------------------------------------------------------------

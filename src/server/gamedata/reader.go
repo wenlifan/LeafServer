@@ -1,9 +1,9 @@
 package gamedata
 
 import (
+	"github.com/zhanglifan/leaf_server/leaf/log"
+	"github.com/zhanglifan/leaf_server/leaf/recordfile"
 	"reflect"
-	"zlf_leaf/src/frame/leaf/log"
-	"zlf_leaf/src/frame/leaf/recordfile"
 )
 
 func readRf(st interface{}) *recordfile.RecordFile {

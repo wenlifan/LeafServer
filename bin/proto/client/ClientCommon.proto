@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package ClientCommon;
+
+//------------------------------------------------------------------
+// 反馈：统一反馈错误码
+message RspErrorCode {
+  int32       ErrorCodeID = 1;    // 错误码 ID
+  string      ErrorString = 2;    // [调试使用]
+}
+
+
+// 请求：GM 调用服务器操作
+message ReqServerGM {
+  string      GMString = 1;    // GM 指令串
+}
+
+//------------------------------------------------------------------
