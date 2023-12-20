@@ -7,18 +7,18 @@ import (
 	"io/ioutil"
 )
 
-var Serverstruct {
-LogLevel    string
-LogPath     string
-WSAddr      string
-CertFile    string
-KeyFile     string
-TCPAddr     string
-MaxConnNum  int
-ConsolePort int
-ProfilePath string
-Node        string
-ClusterPath string
+var Server struct {
+	LogLevel    string
+	LogPath     string
+	WSAddr      string
+	CertFile    string
+	KeyFile     string
+	TCPAddr     string
+	MaxConnNum  int
+	ConsolePort int
+	ProfilePath string
+	Node        string
+	ClusterPath string
 }
 
 func init() {

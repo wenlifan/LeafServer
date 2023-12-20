@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/zhanglifan/leaf_server/leaf/log"
 	"net"
+	"net/http"
 	"net/rpc"
 	"time"
 )
@@ -14,17 +15,14 @@ var (
 	clusterConf map[string]map[string]string
 )
 
-func Init() {
+func init() {
+	clients = make(map[string]*rpc.Client)
+	clusterConf = make(map[string]map[string]string)
 }
 
 // 开启监听
 func listen(addr string) error {
-	// 断开 old 监听
-	//err := server.Close()
-	//if err != nil {
-	//	return err
-	//}
-
+	rpc.HandleHTTP()
 	// 创建新的连接
 	l, err := net.Listen("tcp", addr)
 	if err != nil {
@@ -42,13 +40,14 @@ func connect(node string, addr string) bool {
 		tempC.Close()
 	}
 
-	client, err := rpc.Dial("tcp", addr)
+	client, err := rpc.DialHTTP("tcp", addr)
 	if err != nil {
 		log.Error("connect rpc server fail node:%s addr:%s", node, addr)
 		return true
 	}
 
 	clients[node] = client
+	log.Warning("connect rpc server success node:%s addr:%s", node, addr)
 	return false
 }
 
@@ -65,23 +64,52 @@ func Load(jsonData []byte, nodeName string) {
 	if !ok {
 		log.Fatal("cluster config no find self: %s", nodeName)
 	}
-	listen(nodeServer)
-
-	// 连接其他节点
-	for node, addr := range clusterConf["node"] {
-		// 连接
-		go func() {
-			if node == nodeName {
-				return
-			}
-			log.Warning("connect rpc server node:%s, addr:%s", node, addr)
-			for connect(node, addr) {
-				// 连接服务器失败, 延时再次连接
-				log.Warning("Wait for reconnection: ", node, addr)
-				time.Sleep(time.Duration(3) * time.Second)
-			}
-		}()
+	err = listen(nodeServer)
+	if err != nil {
+		log.Fatal("listen rpc server err: %s", err)
 	}
+
+	go func() {
+		// 连接其他节点
+		for node, addr := range clusterConf["node"] {
+			// 连接
+			go func(node string, addr string, nodeName string) {
+				if node != nodeName {
+					log.Warning("connect rpc server node:%s, addr:%s", node, addr)
+					for connect(node, addr) {
+						// 连接服务器失败, 延时再次连接
+						log.Warning("Wait for reconnection: ", node, addr)
+						time.Sleep(time.Duration(3) * time.Second)
+					}
+				}
+			}(node, addr, nodeName)
+		}
+	}()
+
+	// TODO: 重连
+	go func() {
+		for {
+			// 间隔3秒 发起心跳检测
+			time.Sleep(time.Duration(3) * time.Second)
+			for node, rpcConnect := range clients {
+				var reply HeartbeatMsg
+				args := HeartbeatMsg{Msg: "ping"}
+				err := rpcConnect.Call("ConnMsg.Heartbeat", args, &reply)
+				if err != nil {
+					log.Error("重连 Heartbeat err: %s", err)
+					// 连接失败, 重新连接
+					for connect(node, clusterConf["node"][node]) {
+						// 连接服务器失败, 延时再次连接
+						log.Warning("重新连接失败: ", node, clusterConf["node"][node])
+					}
+					//} else {
+					//	log.Warning("Heartbeat reply: %s", reply.Msg)
+				}
+			}
+		}
+	}()
+
+	http.Serve(server, nil)
 }
 
 func Destroy() {

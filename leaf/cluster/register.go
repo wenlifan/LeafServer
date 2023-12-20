@@ -1,18 +1,24 @@
 package cluster
 
-/*
-// 消息注册
-type RegisterClusterMsg struct {
-	MsgNode map[interface{}]string
+import (
+	"net/rpc"
+)
+
+func init() {
+	myConnMsg := new(ConnMsg)
+	rpc.Register(myConnMsg)
 }
 
-func (r *RegisterClusterMsg) Register(id interface{}, node string) {
-	r.MsgNode[id] = node
+// RPC: 连接类管理消息
+type ConnMsg struct{}
+
+// 心跳消息结构体
+type HeartbeatMsg struct {
+	Msg string
 }
 
-func NewRouter() *RegisterClusterMsg {
-	router := &RegisterClusterMsg{}
-	return router
+// 连接类: 处理心跳消息
+func (c *ConnMsg) Heartbeat(args *HeartbeatMsg, reply *HeartbeatMsg) error {
+	reply.Msg = "pong"
+	return nil
 }
-
-*/

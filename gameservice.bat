@@ -1,0 +1,1 @@
+go run .\cmd\gameserver\main.go -config="bin/conf/gameserver.json"  -cluster="bin/conf/cluster.json"
