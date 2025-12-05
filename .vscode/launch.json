@@ -1,0 +1,51 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Friend Server",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/friendserver/main.go",
+            "args": [
+                "-config=bin/conf/friendserver.json",
+                "-cluster=bin/conf/cluster.json"
+            ],
+            "env": {},
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "showLog": true
+        },
+        {
+            "name": "Debug Game Server",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/gameserver/main.go",
+            "args": [
+                "-config=bin/conf/gameserver.json",
+                "-cluster=bin/conf/cluster.json"
+            ],
+            "env": {},
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "showLog": true
+        },
+        {
+            "name": "Debug Friend Server (Attach)",
+            "type": "go",
+            "request": "attach",
+            "mode": "local",
+            "processId": 0,
+            "showLog": true
+        },
+        {
+            "name": "Debug Game Server (Attach)",
+            "type": "go",
+            "request": "attach",
+            "mode": "local",
+            "processId": 0,
+            "showLog": true
+        }
+    ]
+}

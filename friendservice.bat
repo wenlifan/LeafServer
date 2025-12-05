@@ -1,1 +1,0 @@
-go run .\cmd\friendserver\main.go -config="bin/conf/friendserver.json"  -cluster="bin/conf/cluster.json"
