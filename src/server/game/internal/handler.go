@@ -1,10 +1,11 @@
 package internal
 
 import (
+	"reflect"
+
 	"github.com/zhanglifan/leaf_server/leaf/gate"
 	"github.com/zhanglifan/leaf_server/leaf/log"
-	"github.com/zhanglifan/proto/PreLobby"
-	"reflect"
+	"github.com/zhanglifan/leaf_server/src/proto/PreLobby"
 )
 
 func init() {

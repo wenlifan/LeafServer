@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package CFriend;
-option go_package = "github.com/zhanglifan/proto/CFriend";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/CFriend";
 
 //------------------------------------------------------------------
 message CFriendAdd {

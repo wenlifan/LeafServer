@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package Level;
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/Level";
 
 //------------------------------------------------------------------
 // 请求：上报服务器信息

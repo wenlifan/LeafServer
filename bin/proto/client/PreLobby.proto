@@ -4,7 +4,7 @@ package PreLobby;
 
 import "Struct.proto";
 import "Enum.proto";
-option go_package = "github.com/zhanglifan/proto/PreLobby";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/PreLobby";
 
 
 //------------------------------------------------------------------

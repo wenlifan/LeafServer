@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package Base;
-option go_package = "github.com/zhanglifan/proto/Base";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/Base";
 
 //------------------------------------------------------------------
 message BaseMsg {

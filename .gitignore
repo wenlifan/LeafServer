@@ -3,3 +3,4 @@ vender/**
 vendor
 run/log/*
 *.log
+docs/操作记录/*

@@ -1,13 +1,14 @@
 package internal
 
 import (
-	"github.com/zhanglifan/leaf_server/leaf/log"
-	//"github.com/zhanglifan/proto/CFriend"
 	"reflect"
+
+	"github.com/zhanglifan/leaf_server/leaf/log"
+	"github.com/zhanglifan/leaf_server/src/proto/CFriend"
 )
 
 func init() {
-	//handler(&CFriend.CFriendAdd{}, handleFriendAdd)
+	handler(&CFriend.CFriendAdd{}, handleFriendAdd)
 }
 
 func handler(m interface{}, h interface{}) {

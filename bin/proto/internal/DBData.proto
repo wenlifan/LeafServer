@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 package DBData;
-import "../client/PreLobby.proto";
+import "PreLobby.proto";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/DBData";
 
 //------------------------------------------------------------------
 // DS 信息

@@ -2,7 +2,7 @@ package msg
 
 import (
 	"github.com/zhanglifan/leaf_server/leaf/network/protobuf"
-	"github.com/zhanglifan/proto/PreLobby"
+	"github.com/zhanglifan/leaf_server/src/proto/PreLobby"
 )
 
 var Processor = protobuf.NewProcessor()

@@ -18,7 +18,6 @@ require (
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
-	github.com/zhanglifan/proto v0.0.0
 	go.uber.org/zap v1.24.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
@@ -30,4 +29,3 @@ require (
 	go.uber.org/multierr v1.6.0 // indirect
 )
 
-replace github.com/zhanglifan/proto => ../../pkg/mod/github.com/zhanglifan/proto
