@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+
 	"github.com/zhanglifan/leaf_server/leaf/db"
 	"github.com/zhanglifan/leaf_server/leaf/log"
 )
@@ -17,9 +18,9 @@ func init() {
 }
 
 func connectDB() {
-	RedisDB.RedisHost = "192.168.2.174"
-	RedisDB.RedisPort = 9001
-	RedisDB.RedisAuth = "wtredis@123"
+	RedisDB.RedisHost = "127.0.0.1"
+	RedisDB.RedisPort = 6379
+	RedisDB.RedisAuth = "123456"
 	RedisDB.Database = 0
 
 	RedisDB.ConnectDB()
