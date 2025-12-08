@@ -1,6 +1,7 @@
 .idea/**
 vender/**
 vendor
-run/log/*
+run/*/log/*.log
 *.log
 docs/操作记录/*
+run
