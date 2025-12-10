@@ -20,7 +20,7 @@ func init() {
 func connectDB() {
 	RedisDB.RedisHost = "127.0.0.1"
 	RedisDB.RedisPort = 6379
-	RedisDB.RedisAuth = "123456"
+	RedisDB.RedisAuth = ""
 	RedisDB.Database = 0
 
 	RedisDB.ConnectDB()

@@ -26,7 +26,6 @@ message RspRoleInfo {
 // 请求： 创建角色
 message ReqCreateRole {
   string                  RoleName = 1;    // 角色名称
-  Struct.HeroData         HeroData = 2;    // 英雄自定义数据
 }
 
 // 反馈： 创建角色结果

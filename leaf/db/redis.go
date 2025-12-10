@@ -3,8 +3,9 @@ package db
 import (
 	"context"
 	"fmt"
-	redis "github.com/go-redis/redis/v8"
 	"time"
+
+	redis "github.com/go-redis/redis/v8"
 )
 
 // 定义一个RedisSingleObj结构体
@@ -21,13 +22,18 @@ func (r *RedisSingleObj) ConnectDB() (err error) {
 	// Redis连接格式拼接
 	redisAddr := fmt.Sprintf("%s:%d", r.RedisHost, r.RedisPort)
 	// Redis 连接对象: NewClient将客户端返回到由选项指定的Redis服务器。
-	r.Db = redis.NewClient(&redis.Options{
-		Addr:        redisAddr,   // redis服务ip:port
-		Password:    r.RedisAuth, // redis的认证密码
-		DB:          r.Database,  // 连接的database库
-		IdleTimeout: 300,         // 默认Idle超时时间
-		PoolSize:    100,         // 连接池
-	})
+	options := redis.Options{
+		Addr: redisAddr, // redis服务ip:port
+		// Password:    r.RedisAuth, // redis的认证密码
+		DB:          r.Database, // 连接的database库
+		IdleTimeout: 300,        // 默认Idle超时时间
+		PoolSize:    100,        // 连接池
+	}
+	if r.RedisAuth != "" {
+		options.Password = r.RedisAuth
+	}
+	r.Db = redis.NewClient(&options)
+
 	fmt.Printf("Connecting Redis : %v\n", redisAddr)
 
 	// 需要使用context库

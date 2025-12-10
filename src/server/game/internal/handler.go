@@ -10,6 +10,8 @@ import (
 
 func init() {
 	handler(&PreLobby.ReqLogin{}, handlePreLobbyReqLogin)
+	// ReqCreateRole
+	handler(&PreLobby.ReqCreateRole{}, handlePreLobbyReqCreateRole)
 }
 
 func handler(m interface{}, h interface{}) {
@@ -23,10 +25,22 @@ func handlePreLobbyReqLogin(args []interface{}) {
 	a := args[1].(gate.Agent)
 
 	// 输出收到的消息的内容
-	log.Debug("AccountName: %v", m.GetAccountName())
+	log.Debug("[PreLobby] ReqLogin AccountName: %+v", m)
 
 	a.WriteMsgBase(&PreLobby.RspRoleInfo{
-		RoleName: "zlf1",
-		RoleUID:  11,
+		RoleName: "",
+		RoleUID:  0,
 	}, "PreLobby.RspRoleInfo")
+}
+
+func handlePreLobbyReqCreateRole(args []interface{}) {
+	m := args[0].(*PreLobby.ReqCreateRole)
+	a := args[1].(gate.Agent)
+
+	log.Debug("[PreLobby] ReqCreateRole RoleName: %+v", m)
+
+	a.WriteMsgBase(&PreLobby.RspCreateRole{
+		Succeed:  true,
+		RoleName: m.GetRoleName(),
+	}, "PreLobby.RspCreateRole")
 }

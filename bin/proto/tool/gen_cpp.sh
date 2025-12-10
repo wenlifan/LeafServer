@@ -68,7 +68,19 @@ fi
 # 设置输出目录（相对于 bin/proto 目录）
 PROTO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 OUTPUT_DIR="$PROTO_ROOT/../../src/proto"
+
+# 创建输出目录（如果不存在）
+if [ ! -d "$OUTPUT_DIR" ]; then
+    echo "创建输出目录: $OUTPUT_DIR"
+    mkdir -p "$OUTPUT_DIR"
+fi
+
+# 获取输出目录的绝对路径
 OUTPUT_DIR_ABS="$(cd "$OUTPUT_DIR" && pwd)"
+
+echo "Proto 根目录: $PROTO_ROOT"
+echo "输出目录: $OUTPUT_DIR_ABS"
+echo
 
 # 切换到 proto 根目录
 cd "$PROTO_ROOT"
@@ -77,7 +89,7 @@ cd "$PROTO_ROOT"
 # 生成共享协议文件
 # ============================================
 echo "[1/6] 生成共享协议文件..."
-"$SCRIPT_DIR/$PROTOC" --proto_path=./share --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" share/Base.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./share --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" share/Base.proto || {
     echo "错误: Base.proto 生成失败"
     exit 1
 }
@@ -86,27 +98,27 @@ echo "[1/6] 生成共享协议文件..."
 # 生成客户端协议文件
 # ============================================
 echo "[2/6] 生成客户端协议文件..."
-"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" client/Struct.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" client/Struct.proto || {
     echo "错误: Struct.proto 生成失败"
     exit 1
 }
 
-"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" client/Enum.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" client/Enum.proto || {
     echo "错误: Enum.proto 生成失败"
     exit 1
 }
 
-"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" client/PreLobby.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" client/PreLobby.proto || {
     echo "错误: PreLobby.proto 生成失败"
     exit 1
 }
 
-"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" client/Lobby.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" client/Lobby.proto || {
     echo "错误: Lobby.proto 生成失败"
     exit 1
 }
 
-"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" client/Chat.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./client --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" client/Chat.proto || {
     echo "错误: Chat.proto 生成失败"
     exit 1
 }
@@ -115,7 +127,7 @@ echo "[2/6] 生成客户端协议文件..."
 # 生成服务端协议文件
 # ============================================
 echo "[3/6] 生成服务端协议文件..."
-"$SCRIPT_DIR/$PROTOC" --proto_path=./server --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" server/Level.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./server --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" server/Level.proto || {
     echo "错误: Level.proto 生成失败"
     exit 1
 }
@@ -124,7 +136,7 @@ echo "[3/6] 生成服务端协议文件..."
 # 生成集群协议文件
 # ============================================
 echo "[4/6] 生成集群协议文件..."
-"$SCRIPT_DIR/$PROTOC" --proto_path=./cluster --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" cluster/CFriend.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./cluster --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" cluster/CFriend.proto || {
     echo "错误: CFriend.proto 生成失败"
     exit 1
 }
@@ -133,7 +145,7 @@ echo "[4/6] 生成集群协议文件..."
 # 生成内部协议文件
 # ============================================
 echo "[5/6] 生成内部协议文件..."
-"$SCRIPT_DIR/$PROTOC" --proto_path=./client --proto_path=./internal --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR" internal/DBData.proto || {
+"$SCRIPT_DIR/$PROTOC" --proto_path=./client --proto_path=./internal --plugin=protoc-gen-go="$SCRIPT_DIR/$PROTOC_GEN_GO" --go_out="$OUTPUT_DIR_ABS" internal/DBData.proto || {
     echo "错误: DBData.proto 生成失败"
     exit 1
 }
@@ -157,6 +169,7 @@ if [ -d "$PROTO_SRC_DIR" ]; then
             dstPath="$OUTPUT_DIR_ABS/$dirName"
             
             if [ ! -d "$dstPath" ]; then
+                # 目标目录不存在，直接移动
                 echo "正在移动: $dirName"
                 if mv "$srcPath" "$dstPath" 2>/dev/null; then
                     echo "已移动: $dirName"
@@ -170,7 +183,29 @@ if [ -d "$PROTO_SRC_DIR" ]; then
                     fi
                 fi
             else
-                echo "跳过: $dirName 已存在"
+                # 目标目录已存在，先删除旧目录再移动新目录（更新文件）
+                echo "更新: $dirName (目标目录已存在，先删除旧文件)"
+                if rm -rf "$dstPath" 2>/dev/null; then
+                    if mv "$srcPath" "$dstPath" 2>/dev/null; then
+                        echo "已更新: $dirName"
+                    else
+                        echo "警告: 移动 $dirName 失败，尝试复制..."
+                        if cp -r "$srcPath" "$dstPath" 2>/dev/null && [ -d "$dstPath" ]; then
+                            echo "已复制更新: $dirName"
+                            rm -rf "$srcPath" 2>/dev/null
+                        else
+                            echo "错误: 无法更新 $dirName"
+                        fi
+                    fi
+                else
+                    echo "警告: 无法删除旧目录 $dirName，尝试直接复制覆盖..."
+                    if cp -r "$srcPath"/* "$dstPath" 2>/dev/null; then
+                        echo "已复制覆盖: $dirName"
+                        rm -rf "$srcPath" 2>/dev/null
+                    else
+                        echo "错误: 无法更新 $dirName"
+                    fi
+                fi
             fi
         fi
     done
@@ -191,6 +226,6 @@ fi
 # ============================================
 echo
 echo "============================================"
-echo "所有 Protocol Buffers 代码已生成到: $OUTPUT_DIR"
+echo "所有 Protocol Buffers 代码已生成到: $OUTPUT_DIR_ABS"
 echo "============================================"
 echo

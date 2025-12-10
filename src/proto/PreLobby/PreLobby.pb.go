@@ -158,7 +158,6 @@ func (x *RspRoleInfo) GetRoleName() string {
 type ReqCreateRole struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RoleName      string                 `protobuf:"bytes,1,opt,name=RoleName,proto3" json:"RoleName,omitempty"` // 角色名称
-	HeroData      *Struct.HeroData       `protobuf:"bytes,2,opt,name=HeroData,proto3" json:"HeroData,omitempty"` // 英雄自定义数据
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -198,13 +197,6 @@ func (x *ReqCreateRole) GetRoleName() string {
 		return x.RoleName
 	}
 	return ""
-}
-
-func (x *ReqCreateRole) GetHeroData() *Struct.HeroData {
-	if x != nil {
-		return x.HeroData
-	}
-	return nil
 }
 
 // 反馈： 创建角色结果
@@ -437,10 +429,9 @@ const file_PreLobby_proto_rawDesc = "" +
 	"AuthSecret\"C\n" +
 	"\vRspRoleInfo\x12\x18\n" +
 	"\aRoleUID\x18\x01 \x01(\x03R\aRoleUID\x12\x1a\n" +
-	"\bRoleName\x18\x02 \x01(\tR\bRoleName\"Y\n" +
+	"\bRoleName\x18\x02 \x01(\tR\bRoleName\"+\n" +
 	"\rReqCreateRole\x12\x1a\n" +
-	"\bRoleName\x18\x01 \x01(\tR\bRoleName\x12,\n" +
-	"\bHeroData\x18\x02 \x01(\v2\x10.Struct.HeroDataR\bHeroData\"E\n" +
+	"\bRoleName\x18\x01 \x01(\tR\bRoleName\"E\n" +
 	"\rRspCreateRole\x12\x18\n" +
 	"\aSucceed\x18\x01 \x01(\bR\aSucceed\x12\x1a\n" +
 	"\bRoleName\x18\x02 \x01(\tR\bRoleName\"\x0f\n" +
@@ -484,14 +475,13 @@ var file_PreLobby_proto_goTypes = []any{
 }
 var file_PreLobby_proto_depIdxs = []int32{
 	7, // 0: PreLobby.ReqLogin.PlatformID:type_name -> Enum.EPlatformType
-	8, // 1: PreLobby.ReqCreateRole.HeroData:type_name -> Struct.HeroData
-	8, // 2: PreLobby.PlayerBaseInfo.HeroData:type_name -> Struct.HeroData
-	5, // 3: PreLobby.RspEnterLobby.PlayerInfo:type_name -> PreLobby.PlayerBaseInfo
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	8, // 1: PreLobby.PlayerBaseInfo.HeroData:type_name -> Struct.HeroData
+	5, // 2: PreLobby.RspEnterLobby.PlayerInfo:type_name -> PreLobby.PlayerBaseInfo
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_PreLobby_proto_init() }
