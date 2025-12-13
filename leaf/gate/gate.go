@@ -131,7 +131,10 @@ func (a *agent) checkReceivedHeader(data []byte) (bool, error) {
 		data[key] = value
 		key += 1
 	}
-	a.conn.WriteMsg(data)
+	err := a.conn.WriteMsg(data)
+	if err != nil {
+		return false, err
+	}
 
 	a.receivedHeader = true
 	return true, nil
