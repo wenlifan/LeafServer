@@ -2,12 +2,13 @@ package gate
 
 import (
 	"encoding/binary"
-	"github.com/zhanglifan/leaf_server/leaf/chanrpc"
-	"github.com/zhanglifan/leaf_server/leaf/log"
-	"github.com/zhanglifan/leaf_server/leaf/network"
 	"net"
 	"reflect"
 	"time"
+
+	"github.com/zhanglifan/leaf_server/leaf/chanrpc"
+	"github.com/zhanglifan/leaf_server/leaf/log"
+	"github.com/zhanglifan/leaf_server/leaf/network"
 )
 
 type Gate struct {
@@ -60,6 +61,8 @@ func (gate *Gate) Run(closeSig chan bool) {
 		tcpServer.LittleEndian = gate.LittleEndian
 		tcpServer.NewAgent = func(conn *network.TCPConn) network.Agent {
 			a := &agent{conn: conn, gate: gate}
+			// 检查 agent结构中是否有 receivedHeader 字段, 如果有赋值为true
+			a.receivedHeader = true
 			if gate.AgentChanRPC != nil {
 				gate.AgentChanRPC.Go("NewAgent", a)
 			}
@@ -141,6 +144,7 @@ func (a *agent) Run() {
 			log.Debug("read message: %v", err)
 			break
 		}
+		log.Debug("read message: %d", len(data))
 		if !a.receivedHeader {
 			//	首条消息验证
 			result, err := a.checkReceivedHeader(data)

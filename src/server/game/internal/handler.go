@@ -12,6 +12,7 @@ func init() {
 	handler(&PreLobby.ReqLogin{}, handlePreLobbyReqLogin)
 	// ReqCreateRole
 	handler(&PreLobby.ReqCreateRole{}, handlePreLobbyReqCreateRole)
+	handler(&PreLobby.ReqEnterLobby{}, handlerPreLobbyReqEnterLobby)
 }
 
 func handler(m interface{}, h interface{}) {
@@ -43,4 +44,13 @@ func handlePreLobbyReqCreateRole(args []interface{}) {
 		Succeed:  true,
 		RoleName: m.GetRoleName(),
 	}, "PreLobby.RspCreateRole")
+}
+
+func handlerPreLobbyReqEnterLobby(args []interface{}) {
+	m := args[0].(*PreLobby.ReqEnterLobby)
+	a := args[1].(gate.Agent)
+
+	log.Debug("[PreLobby] ReqEnterLobby AccountName: %+v", m)
+
+	a.WriteMsgBase(&PreLobby.RspEnterLobby{}, "PreLobby.RspEnterLobby")
 }
