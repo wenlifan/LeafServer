@@ -1,0 +1,274 @@
+---
+alwaysApply: false
+---
+# 本规则主要为服务器测试准备
+
+## 重要内容
+    - 考虑用户的输入，例如: 
+        - loginServerAddr地址
+        - 功能测试范围
+        - 等等
+
+## Http请求发起:
+    - 使用mcphttp(http_request接口)MCP工具,则使用该MCP发起请求。
+
+## 参数说明:
+    - {{account}}: 登录的账号
+    - {{gameServerAddr}}: 游戏服务器地址（中心服）
+
+    
+## 特殊说明:
+    ### 测试报告:   
+        - 测试完成后需要: 简易测试结果展示（聊天窗口）,并询问我是否生成 完成测试报告、快速测试报告。
+    ### 测试过程:
+        - 需要描述下一步要做的事情。
+
+
+## 交互协议: 定义了 client 与 中心服交互的协议
+    - bin\proto\client
+
+
+
+## 测试如何登录角色
+
+### 自动化测试登录流程（基于HTTP接口）
+
+服务器提供了统一的HTTP测试接口，AI可以通过以下步骤进行自动化登录测试：
+
+#### 前置条件
+    - 服务器地址: `{{gameServerAddr}}` (游戏服务器地址)
+    - 测试账号: `{{account}}` (登录账号)
+    - 接口地址: `POST {{gameServerAddr}}/interface_test`
+
+#### 步骤1: 查询角色UID（可选，用于验证账号状态）
+    接口: `POST {{gameServerAddr}}/interface_test`
+    
+    请求体:
+    ```json
+    {
+        "sBehavior": "query_role_uid",
+        "tbArgs": {
+            "sAccount": "{{account}}"
+        }
+    }
+    ```
+    
+    响应处理:
+    - 成功响应: `{"Succeed": true, "ErrorDesc": "succeed", "Data": {...}}`
+        - 如果返回角色UID，说明账号已有角色，可直接登录
+        - 如果返回无角色，需要先创建角色
+    - 失败响应: `{"Succeed": false, "ErrorDesc": "Players are offline"}`
+        - 说明玩家离线，需要先建立连接并登录
+
+#### 步骤2: 建立连接并登录账号
+    接口: `POST {{gameServerAddr}}/interface_test`
+    
+    请求体（发送登录协议）:
+    ```json
+    {
+        "sBehavior": "send_proto",
+        "tbArgs": {
+            "sAccount": "{{account}}",
+            "sProtoName": "PreLobby.ReqLogin",
+            "tbProtoArgs": {
+                "PlatformID": 1,
+                "AccountID": "{{account}}",
+                "AccountName": "{{account}}",
+                "JobNumber": "",
+                "AuthSecret": ""
+            }
+        }
+    }
+    ```
+    
+    响应处理:
+    - 成功: `{"Succeed": true, "ErrorDesc": "succeed", "Data": {...}}`
+        - 检查响应中的 `tbMsgData`，确认登录是否成功
+        - 如果返回 `PreLobby.RspRoleInfo`，说明登录成功，已获取角色信息
+        - 如果返回错误码，需要根据错误码处理
+    - 失败: `{"Succeed": false, "ErrorDesc": "错误描述"}`
+        - 记录错误信息，停止测试流程
+
+#### 步骤3: 创建角色（如果登录返回无角色或需要创建新角色）
+    接口: `POST {{gameServerAddr}}/interface_test`
+    
+    请求体:
+    ```json
+    {
+        "sBehavior": "send_proto",
+        "tbArgs": {
+            "sAccount": "{{account}}",
+            "sProtoName": "PreLobby.ReqCreateRole",
+            "tbProtoArgs": {
+                "RoleName": "测试角色_{{account}}"
+            }
+        }
+    }
+    ```
+    
+    响应处理:
+    - 成功: `{"Succeed": true, "ErrorDesc": "succeed", "Data": {...}}`
+        - 检查响应中的 `sResponse`，确认是否为 `PreLobby.RspCreateRole`
+        - 检查 `tbMsgData` 中的 `Succeed` 字段，确认创建是否成功
+    - 失败: 记录错误，停止测试流程
+
+#### 步骤4: 进入大厅（登录成功后）
+    接口: `POST {{gameServerAddr}}/interface_test`
+    
+    请求体:
+    ```json
+    {
+        "sBehavior": "send_proto",
+        "tbArgs": {
+            "sAccount": "{{account}}",
+            "sProtoName": "PreLobby.ReqEnterLobby",
+            "tbProtoArgs": {}
+        }
+    }
+    ```
+    
+    响应处理:
+    - 成功: `{"Succeed": true, "ErrorDesc": "succeed", "Data": {...}}`
+        - 检查响应中的 `sResponse`，确认是否为 `PreLobby.RspEnterLobby`
+        - 获取 `tbMsgData` 中的 `PlayerInfo`，确认玩家数据是否正确加载
+    - 失败: 记录错误，分析失败原因
+
+#### 自动化测试执行规范
+    1. **错误处理**:
+        - 每个步骤执行后，必须检查响应的 `Succeed` 字段
+        - 如果 `Succeed: false`，记录 `ErrorDesc` 并停止后续步骤
+        - 检查响应中的 `ErrorCodeID`，根据错误码判断是否需要重试或跳过
+    
+    2. **响应验证**:
+        - 验证 `Data.sRequest` 是否与发送的协议名称一致
+        - 验证 `Data.sResponse` 是否为预期的响应协议
+        - 检查 `Data.tbMsgData` 中的关键字段是否符合预期
+    
+    3. **日志记录**:
+        - 记录每个步骤的请求和响应
+        - 记录执行时间 `nElapsedTime`
+        - 记录错误信息和错误码
+    
+    4. **流程控制**:
+        - 步骤1（查询角色UID）为可选步骤，失败不影响后续流程
+        - 步骤2（登录）为必需步骤，失败则停止测试
+        - 步骤3（创建角色）根据步骤2的响应决定是否执行
+        - 步骤4（进入大厅）必须在登录成功后执行
+
+#### 协议说明
+    - 所有协议定义在: `bin/proto/client` 目录
+    - 登录相关协议: `PreLobby.proto`
+    - 平台类型枚举: `Enum.proto` (EPlatformType: 0=None, 1=Steam)
+    - 协议消息格式: `包名.消息名` (如: `PreLobby.ReqLogin`)
+
+
+## 测试报告结构
+
+### 简易测试结果展示（聊天窗口）
+
+测试完成后，在聊天窗口中展示简易测试结果，格式如下：
+
+```
+## 测试结果汇总
+
+### 测试用例 1: [测试用例名称]
+- **接口**: `MsgCtrReqMartialArtsAwaken`
+- **消息ID**: `173165963`
+- **测试结果**: ✅ 通过 / ❌ 失败 / ⊘ 跳过
+- **简要说明**: [测试结果简要说明]
+
+### 测试用例 2: [测试用例名称]
+- **接口**: `MsgCtrReqLogin`
+- **消息ID**: `241539903`
+- **测试结果**: ✅ 通过
+- **简要说明**: [测试结果简要说明]
+
+---
+**测试统计**: 总用例数: 2 | 通过: 1 | 失败: 1 | 跳过: 0
+**成功率**: 50.0%
+```
+
+## 测试完成后的处理流程:
+    测试完成后，按以下流程处理:
+    
+    ### 步骤1: 展示测试结果
+        - 在聊天窗口中展示简易测试结果（参考"简易测试结果展示"格式）
+        - 显示测试统计信息（总用例数、通过数、失败数、跳过数、成功率）
+    
+    ### 步骤2: 测试结果评估与报告生成
+        - 如果测试全部通过:
+            提示: "✅ 所有测试用例已通过，服务器运行正常。"
+            询问: "是否需要生成测试报告？"
+                选项:
+                    A 生成完整测试报告
+                    B 生成简易测试报告
+                    C 跳过报告生成
+            用户输入后，依据输入生成报告（如选择A或B）。
+        
+        - 如果测试存在失败用例:
+            提示: "❌ 检测到测试失败用例，请查看测试报告详情。"
+            询问: "请选择后续操作："
+                选项:
+                    A 生成完整测试报告
+                    B 生成简易测试报告
+                    C 都生成
+                    D 跳过报告生成，直接处理问题
+            用户输入后，依据输入生成报告（如选择A、B或C）。
+    
+    ### 步骤3: 后续操作提示
+        - 如果测试全部通过:
+            询问: "是否需要执行其他测试或操作？"
+                选项:
+                    A 执行其他功能测试
+                    B 生成性能分析报告
+                    C 查看详细日志分析
+                    D 结束测试会话
+        
+        - 如果测试存在失败用例:
+            询问: "是否需要进行问题修复？"
+                选项:
+                    A 立即开始修复问题
+                    B 查看详细错误日志
+                    C 重新执行失败的测试用例
+                    D 跳过修复，继续其他操作
+                    E 结束测试会话
+    
+    ### 步骤4: 问题修复流程（用户选择"立即开始修复问题"时）:
+        1. 分析失败原因:
+            - 查看测试报告中的错误信息
+            - 分析服务器日志（参考日志分析章节）
+            - 定位问题代码位置
+        
+        2. 制定修复方案:
+            - 确定修复策略
+            - 评估修复影响范围
+        
+        3. 执行修复:
+            - 修改代码
+            - 验证修复逻辑
+            - 编译代码确保无编译错误
+        
+        4. 重新测试:
+            - 仅执行之前失败的测试用例
+            - 验证修复是否成功
+        
+        5. 确认修复结果:
+            - 如果修复成功: 更新测试报告，标记问题已解决，返回步骤1
+            - 如果修复失败: 继续分析或询问用户是否寻求帮助
+
+## 日志分析
+    - 日志目录: `run` 目录下，按服务类型区分
+    - 日志文件路径:
+        - 游戏服务（gameserver）: `run/game/log/logfile.log`
+        - 好友服务（friendserver）: `run/friend/log/logfile.log`
+    - 日志读取规则:
+        - 根据测试的服务类型，读取对应服务的 `logfile.log` 文件
+        - 如果测试游戏服务相关功能，读取 `run/game/log/logfile.log`
+        - 如果测试好友服务相关功能，读取 `run/friend/log/logfile.log`
+        - 日志目录下可能同时存在带时间戳的历史日志文件，当前运行的日志文件名为 `logfile.log`
+    - 日志分析时机:
+        - 接口执行报错时
+        - 需要验证接口是否正确执行时
+        - 需要排查问题时
+        - 等等
+    

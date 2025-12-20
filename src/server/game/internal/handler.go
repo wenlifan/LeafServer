@@ -29,8 +29,8 @@ func handlePreLobbyReqLogin(args []interface{}) {
 	log.Debug("[PreLobby] ReqLogin AccountName: %+v", m)
 
 	a.WriteMsgBase(&PreLobby.RspRoleInfo{
-		RoleName: "",
-		RoleUID:  0,
+		RoleName: "testName",
+		RoleUID:  12341345,
 	}, "PreLobby.RspRoleInfo")
 }
 
