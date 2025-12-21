@@ -1,0 +1,165 @@
+---
+description: 客户端接口添加、接口添加、新增玩家接口
+alwaysApply: false
+---
+
+# 新增客户端接口操作指南
+
+新增一个客户端接口需要在以下三个位置进行操作：
+
+## 1. 消息注册 (`src/server/msg/msg.go`)
+
+在 `msg.go` 的 `init()` 函数中注册消息类型到 Processor，格式如下：
+
+```go
+Processor.Register(&ProtoPackage.MessageType{}, "ProtoPackage.MessageType")
+```
+
+**示例：**
+```go
+Processor.Register(&PreLobby.ReqEnterLobby{}, "PreLobby.ReqEnterLobby")
+```
+
+**说明：**
+- 第一个参数是消息类型的指针实例
+- 第二个参数是消息的字符串名称，通常格式为 `包名.消息名`
+- 所有客户端消息都需要在这里注册
+
+## 2. 路由设置 (`src/server/gate/router.go`)
+
+在 `router.go` 的 `init()` 函数中设置消息路由，将消息路由到对应的服务模块，格式如下：
+
+```go
+msg.Processor.SetRouter(&ProtoPackage.MessageType{}, serviceModule.ChanRPC)
+```
+
+**示例：**
+```go
+msg.Processor.SetRouter(&PreLobby.ReqEnterLobby{}, game.ChanRPC)
+```
+
+**说明：**
+- 第一个参数是消息类型的指针实例
+- 第二个参数是目标服务模块的 ChanRPC（如 `game.ChanRPC`、`friend.ChanRPC` 等）
+- **重要规则**：**客户端玩家请求默认应该在 `src/server/game` 服务中进行处理**，路由到 `game.ChanRPC`
+- 只有特殊业务需求（如好友系统、登录系统等独立模块）才路由到其他服务模块（如 `friend.ChanRPC`）
+- 根据业务逻辑决定消息应该路由到哪个服务模块
+
+## 3. Handler 注册和实现 (`src/server/{module}/internal/handler.go`)
+
+在对应服务模块的 `handler.go` 文件中：
+
+### 3.1 在 `init()` 函数中注册 handler
+
+```go
+handler(&ProtoPackage.MessageType{}, handleFunctionName)
+```
+
+**示例：**
+```go
+handler(&PreLobby.ReqEnterLobby{}, handlerPreLobbyReqEnterLobby)
+```
+
+### 3.2 实现处理函数
+
+处理函数的标准格式：
+
+```go
+func handlerFunctionName(args []interface{}) {
+    // 1. 提取消息
+    m := args[0].(*ProtoPackage.MessageType)
+    // 2. 获取发送者 Agent
+    a := args[1].(gate.Agent)
+    
+    // 3. 记录日志
+    log.Debug("[Module] MessageType: %+v", m)
+    
+    // 4. 业务逻辑处理
+    // ... 业务代码 ...
+    
+    // 5. 发送响应（如需要）
+    a.WriteMsgBase(&ProtoPackage.ResponseType{
+        // 响应字段
+    }, "ProtoPackage.ResponseType")
+}
+```
+
+**示例：**
+```go
+func handlerPreLobbyReqEnterLobby(args []interface{}) {
+    m := args[0].(*PreLobby.ReqEnterLobby)
+    a := args[1].(gate.Agent)
+    
+    log.Debug("[PreLobby] ReqEnterLobby AccountName: %+v", m)
+    
+    a.WriteMsgBase(&PreLobby.RspEnterLobby{}, "PreLobby.RspEnterLobby")
+}
+```
+
+## 完整流程示例
+
+假设要新增一个 `PreLobby.ReqTest` 消息接口：
+
+### 步骤 1: 在 `src/server/msg/msg.go` 中注册
+```go
+Processor.Register(&PreLobby.ReqTest{}, "PreLobby.ReqTest")
+```
+
+### 步骤 2: 在 `src/server/gate/router.go` 中设置路由
+```go
+// 客户端玩家请求默认路由到 game 服务
+msg.Processor.SetRouter(&PreLobby.ReqTest{}, game.ChanRPC)
+```
+
+### 步骤 3: 在 `src/server/game/internal/handler.go` 中注册和实现
+**注意**：客户端玩家请求的处理函数应该在 `src/server/game/internal/handler.go` 中实现
+```go
+// 在 init() 中注册
+handler(&PreLobby.ReqTest{}, handlePreLobbyReqTest)
+
+// 实现处理函数
+func handlePreLobbyReqTest(args []interface{}) {
+    m := args[0].(*PreLobby.ReqTest)
+    a := args[1].(gate.Agent)
+    
+    log.Debug("[PreLobby] ReqTest: %+v", m)
+    
+    // 业务逻辑
+    // ...
+    
+    // 发送响应
+    a.WriteMsgBase(&PreLobby.RspTest{
+        // 响应数据
+    }, "PreLobby.RspTest")
+}
+```
+
+## 注意事项
+
+1. **消息类型必须一致**：三个位置使用的消息类型必须完全一致
+2. **导入包**：确保在相应文件中导入了正确的 proto 包
+3. **命名规范**：handler 函数命名建议使用 `handle` + 消息名 的格式
+4. **错误处理**：在 handler 中应该考虑空值、边界情况的处理，提高健壮性
+5. **日志记录**：建议在处理函数开始时记录日志，便于调试和追踪
+6. **编译检查**：每次修改后需要编译确保没有编译错误
+
+## 相关文件位置
+
+- 消息注册：`src/server/msg/msg.go`
+- 路由设置：`src/server/gate/router.go`
+- Handler 实现：
+  - **Game 模块（客户端玩家请求默认在此处理）**：`src/server/game/internal/handler.go`
+  - Friend 模块（好友系统相关请求）：`src/server/friend/internal/handler.go`
+  - Login 模块（登录系统相关请求）：`src/server/login/internal/handler.go`
+  - 其他模块：`src/server/{module}/internal/handler.go`
+
+## 服务模块选择原则
+
+**默认规则**：
+- **所有客户端玩家请求都应该在 `src/server/game` 服务中处理**
+- 路由设置时使用 `game.ChanRPC`
+- Handler 实现在 `src/server/game/internal/handler.go` 中
+
+**例外情况**：
+- 只有独立业务模块（如好友系统、登录系统等）的特殊请求才路由到对应的服务模块
+- 例如：好友相关请求可以路由到 `friend.ChanRPC`，但一般玩家游戏请求都应该在 `game` 服务中处理
