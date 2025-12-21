@@ -4,22 +4,17 @@ package Enum;
 option go_package = "github.com/zhanglifan/leaf_server/src/proto/Enum";
 
 //------------------------------------------------------------------
-// 平台类型
+// 平台类型枚举
 enum EPlatformType {
-  PLATFORM_NONE = 0;
-  PLATFORM_STEAM = 1;    // Steam 平台
+  PLATFORM_DEVELOP = 0;     // 开发账号
 }
+//------------------------------------------------------------------
 
-// 物品类型
-enum EGoodsType {
-  NONE = 0;
-  Weapon = 1; // 武器
-  Equipment = 2; // 防具
-}
-
-enum EPlayerUI {
-  UI_NONE = 0;
-  UI_LOBBY = 1;        // 大厅
-  UI_FRIEND = 2;        // 好友界面
+//------------------------------------------------------------------
+// 错误码枚举
+enum EErrorCode {
+  SUCCESS = 0;            // 成功
+  FAILED = 1;             // 失败 
+  // 错误码格式 功能模块_错误描述
 }
 //------------------------------------------------------------------

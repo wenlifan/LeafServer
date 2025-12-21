@@ -8,7 +8,6 @@ package PreLobby
 
 import (
 	Enum "github.com/zhanglifan/leaf_server/src/proto/Enum"
-	Struct "github.com/zhanglifan/leaf_server/src/proto/Struct"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -30,8 +29,7 @@ type ReqLogin struct {
 	PlatformID    Enum.EPlatformType     `protobuf:"varint,1,opt,name=PlatformID,proto3,enum=Enum.EPlatformType" json:"PlatformID,omitempty"` // 平台 ID
 	AccountID     string                 `protobuf:"bytes,2,opt,name=AccountID,proto3" json:"AccountID,omitempty"`                            // 账号 ID
 	AccountName   string                 `protobuf:"bytes,3,opt,name=AccountName,proto3" json:"AccountName,omitempty"`                        // 账号名称
-	JobNumber     string                 `protobuf:"bytes,4,opt,name=JobNumber,proto3" json:"JobNumber,omitempty"`                            // 工号
-	AuthSecret    string                 `protobuf:"bytes,5,opt,name=AuthSecret,proto3" json:"AuthSecret,omitempty"`                          // 授权秘钥(steam授权后, 服务端生成)
+	AuthSecret    string                 `protobuf:"bytes,4,opt,name=AuthSecret,proto3" json:"AuthSecret,omitempty"`                          // 授权秘钥(steam授权后, 服务端生成)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -83,13 +81,6 @@ func (x *ReqLogin) GetAccountID() string {
 func (x *ReqLogin) GetAccountName() string {
 	if x != nil {
 		return x.AccountName
-	}
-	return ""
-}
-
-func (x *ReqLogin) GetJobNumber() string {
-	if x != nil {
-		return x.JobNumber
 	}
 	return ""
 }
@@ -292,11 +283,10 @@ func (*ReqEnterLobby) Descriptor() ([]byte, []int) {
 // 数据：玩家数据
 type PlayerBaseInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoleLevel     int32                  `protobuf:"varint,1,opt,name=RoleLevel,proto3" json:"RoleLevel,omitempty"`       // 角色等级
-	RoleName      string                 `protobuf:"bytes,2,opt,name=RoleName,proto3" json:"RoleName,omitempty"`          // 角色名称
-	HeroData      *Struct.HeroData       `protobuf:"bytes,3,opt,name=HeroData,proto3" json:"HeroData,omitempty"`          // 英雄数据
-	OnlineTime    int32                  `protobuf:"varint,100,opt,name=OnlineTime,proto3" json:"OnlineTime,omitempty"`   // 玩家登录时间
-	OfflineTime   int32                  `protobuf:"varint,101,opt,name=OfflineTime,proto3" json:"OfflineTime,omitempty"` // 玩家离线时间
+	RoleLevel     int32                  `protobuf:"varint,1,opt,name=RoleLevel,proto3" json:"RoleLevel,omitempty"`     // 角色等级
+	RoleName      string                 `protobuf:"bytes,2,opt,name=RoleName,proto3" json:"RoleName,omitempty"`        // 角色名称
+	OnlineTime    int32                  `protobuf:"varint,3,opt,name=OnlineTime,proto3" json:"OnlineTime,omitempty"`   // 玩家登录时间
+	OfflineTime   int32                  `protobuf:"varint,4,opt,name=OfflineTime,proto3" json:"OfflineTime,omitempty"` // 玩家离线时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -343,13 +333,6 @@ func (x *PlayerBaseInfo) GetRoleName() string {
 		return x.RoleName
 	}
 	return ""
-}
-
-func (x *PlayerBaseInfo) GetHeroData() *Struct.HeroData {
-	if x != nil {
-		return x.HeroData
-	}
-	return nil
 }
 
 func (x *PlayerBaseInfo) GetOnlineTime() int32 {
@@ -415,17 +398,16 @@ var File_PreLobby_proto protoreflect.FileDescriptor
 
 const file_PreLobby_proto_rawDesc = "" +
 	"\n" +
-	"\x0ePreLobby.proto\x12\bPreLobby\x1a\fStruct.proto\x1a\n" +
-	"Enum.proto\"\xbd\x01\n" +
+	"\x0ePreLobby.proto\x12\bPreLobby\x1a\n" +
+	"Enum.proto\"\x9f\x01\n" +
 	"\bReqLogin\x123\n" +
 	"\n" +
 	"PlatformID\x18\x01 \x01(\x0e2\x13.Enum.EPlatformTypeR\n" +
 	"PlatformID\x12\x1c\n" +
 	"\tAccountID\x18\x02 \x01(\tR\tAccountID\x12 \n" +
-	"\vAccountName\x18\x03 \x01(\tR\vAccountName\x12\x1c\n" +
-	"\tJobNumber\x18\x04 \x01(\tR\tJobNumber\x12\x1e\n" +
+	"\vAccountName\x18\x03 \x01(\tR\vAccountName\x12\x1e\n" +
 	"\n" +
-	"AuthSecret\x18\x05 \x01(\tR\n" +
+	"AuthSecret\x18\x04 \x01(\tR\n" +
 	"AuthSecret\"C\n" +
 	"\vRspRoleInfo\x12\x18\n" +
 	"\aRoleUID\x18\x01 \x01(\x03R\aRoleUID\x12\x1a\n" +
@@ -435,15 +417,14 @@ const file_PreLobby_proto_rawDesc = "" +
 	"\rRspCreateRole\x12\x18\n" +
 	"\aSucceed\x18\x01 \x01(\bR\aSucceed\x12\x1a\n" +
 	"\bRoleName\x18\x02 \x01(\tR\bRoleName\"\x0f\n" +
-	"\rReqEnterLobby\"\xba\x01\n" +
+	"\rReqEnterLobby\"\x8c\x01\n" +
 	"\x0ePlayerBaseInfo\x12\x1c\n" +
 	"\tRoleLevel\x18\x01 \x01(\x05R\tRoleLevel\x12\x1a\n" +
-	"\bRoleName\x18\x02 \x01(\tR\bRoleName\x12,\n" +
-	"\bHeroData\x18\x03 \x01(\v2\x10.Struct.HeroDataR\bHeroData\x12\x1e\n" +
+	"\bRoleName\x18\x02 \x01(\tR\bRoleName\x12\x1e\n" +
 	"\n" +
-	"OnlineTime\x18d \x01(\x05R\n" +
+	"OnlineTime\x18\x03 \x01(\x05R\n" +
 	"OnlineTime\x12 \n" +
-	"\vOfflineTime\x18e \x01(\x05R\vOfflineTime\"I\n" +
+	"\vOfflineTime\x18\x04 \x01(\x05R\vOfflineTime\"I\n" +
 	"\rRspEnterLobby\x128\n" +
 	"\n" +
 	"PlayerInfo\x18\x01 \x01(\v2\x18.PreLobby.PlayerBaseInfoR\n" +
@@ -471,17 +452,15 @@ var file_PreLobby_proto_goTypes = []any{
 	(*PlayerBaseInfo)(nil),  // 5: PreLobby.PlayerBaseInfo
 	(*RspEnterLobby)(nil),   // 6: PreLobby.RspEnterLobby
 	(Enum.EPlatformType)(0), // 7: Enum.EPlatformType
-	(*Struct.HeroData)(nil), // 8: Struct.HeroData
 }
 var file_PreLobby_proto_depIdxs = []int32{
 	7, // 0: PreLobby.ReqLogin.PlatformID:type_name -> Enum.EPlatformType
-	8, // 1: PreLobby.PlayerBaseInfo.HeroData:type_name -> Struct.HeroData
-	5, // 2: PreLobby.RspEnterLobby.PlayerInfo:type_name -> PreLobby.PlayerBaseInfo
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	5, // 1: PreLobby.RspEnterLobby.PlayerInfo:type_name -> PreLobby.PlayerBaseInfo
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_PreLobby_proto_init() }

@@ -22,23 +22,20 @@ const (
 )
 
 // ------------------------------------------------------------------
-// 平台类型
+// 平台类型枚举
 type EPlatformType int32
 
 const (
-	EPlatformType_PLATFORM_NONE  EPlatformType = 0
-	EPlatformType_PLATFORM_STEAM EPlatformType = 1 // Steam 平台
+	EPlatformType_PLATFORM_DEVELOP EPlatformType = 0 // 开发账号
 )
 
 // Enum value maps for EPlatformType.
 var (
 	EPlatformType_name = map[int32]string{
-		0: "PLATFORM_NONE",
-		1: "PLATFORM_STEAM",
+		0: "PLATFORM_DEVELOP",
 	}
 	EPlatformType_value = map[string]int32{
-		"PLATFORM_NONE":  0,
-		"PLATFORM_STEAM": 1,
+		"PLATFORM_DEVELOP": 0,
 	}
 )
 
@@ -69,103 +66,52 @@ func (EPlatformType) EnumDescriptor() ([]byte, []int) {
 	return file_Enum_proto_rawDescGZIP(), []int{0}
 }
 
-// 物品类型
-type EGoodsType int32
+// ------------------------------------------------------------------
+// 错误码枚举
+type EErrorCode int32
 
 const (
-	EGoodsType_NONE      EGoodsType = 0
-	EGoodsType_Weapon    EGoodsType = 1 // 武器
-	EGoodsType_Equipment EGoodsType = 2 // 防具
+	EErrorCode_SUCCESS EErrorCode = 0 // 成功
+	EErrorCode_FAILED  EErrorCode = 1 // 失败
 )
 
-// Enum value maps for EGoodsType.
+// Enum value maps for EErrorCode.
 var (
-	EGoodsType_name = map[int32]string{
-		0: "NONE",
-		1: "Weapon",
-		2: "Equipment",
+	EErrorCode_name = map[int32]string{
+		0: "SUCCESS",
+		1: "FAILED",
 	}
-	EGoodsType_value = map[string]int32{
-		"NONE":      0,
-		"Weapon":    1,
-		"Equipment": 2,
+	EErrorCode_value = map[string]int32{
+		"SUCCESS": 0,
+		"FAILED":  1,
 	}
 )
 
-func (x EGoodsType) Enum() *EGoodsType {
-	p := new(EGoodsType)
+func (x EErrorCode) Enum() *EErrorCode {
+	p := new(EErrorCode)
 	*p = x
 	return p
 }
 
-func (x EGoodsType) String() string {
+func (x EErrorCode) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (EGoodsType) Descriptor() protoreflect.EnumDescriptor {
+func (EErrorCode) Descriptor() protoreflect.EnumDescriptor {
 	return file_Enum_proto_enumTypes[1].Descriptor()
 }
 
-func (EGoodsType) Type() protoreflect.EnumType {
+func (EErrorCode) Type() protoreflect.EnumType {
 	return &file_Enum_proto_enumTypes[1]
 }
 
-func (x EGoodsType) Number() protoreflect.EnumNumber {
+func (x EErrorCode) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use EGoodsType.Descriptor instead.
-func (EGoodsType) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use EErrorCode.Descriptor instead.
+func (EErrorCode) EnumDescriptor() ([]byte, []int) {
 	return file_Enum_proto_rawDescGZIP(), []int{1}
-}
-
-type EPlayerUI int32
-
-const (
-	EPlayerUI_UI_NONE   EPlayerUI = 0
-	EPlayerUI_UI_LOBBY  EPlayerUI = 1 // 大厅
-	EPlayerUI_UI_FRIEND EPlayerUI = 2 // 好友界面
-)
-
-// Enum value maps for EPlayerUI.
-var (
-	EPlayerUI_name = map[int32]string{
-		0: "UI_NONE",
-		1: "UI_LOBBY",
-		2: "UI_FRIEND",
-	}
-	EPlayerUI_value = map[string]int32{
-		"UI_NONE":   0,
-		"UI_LOBBY":  1,
-		"UI_FRIEND": 2,
-	}
-)
-
-func (x EPlayerUI) Enum() *EPlayerUI {
-	p := new(EPlayerUI)
-	*p = x
-	return p
-}
-
-func (x EPlayerUI) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (EPlayerUI) Descriptor() protoreflect.EnumDescriptor {
-	return file_Enum_proto_enumTypes[2].Descriptor()
-}
-
-func (EPlayerUI) Type() protoreflect.EnumType {
-	return &file_Enum_proto_enumTypes[2]
-}
-
-func (x EPlayerUI) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use EPlayerUI.Descriptor instead.
-func (EPlayerUI) EnumDescriptor() ([]byte, []int) {
-	return file_Enum_proto_rawDescGZIP(), []int{2}
 }
 
 var File_Enum_proto protoreflect.FileDescriptor
@@ -173,20 +119,14 @@ var File_Enum_proto protoreflect.FileDescriptor
 const file_Enum_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"Enum.proto\x12\x04Enum*6\n" +
-	"\rEPlatformType\x12\x11\n" +
-	"\rPLATFORM_NONE\x10\x00\x12\x12\n" +
-	"\x0ePLATFORM_STEAM\x10\x01*1\n" +
+	"Enum.proto\x12\x04Enum*%\n" +
+	"\rEPlatformType\x12\x14\n" +
+	"\x10PLATFORM_DEVELOP\x10\x00*%\n" +
 	"\n" +
-	"EGoodsType\x12\b\n" +
-	"\x04NONE\x10\x00\x12\n" +
+	"EErrorCode\x12\v\n" +
+	"\aSUCCESS\x10\x00\x12\n" +
 	"\n" +
-	"\x06Weapon\x10\x01\x12\r\n" +
-	"\tEquipment\x10\x02*5\n" +
-	"\tEPlayerUI\x12\v\n" +
-	"\aUI_NONE\x10\x00\x12\f\n" +
-	"\bUI_LOBBY\x10\x01\x12\r\n" +
-	"\tUI_FRIEND\x10\x02B2Z0github.com/zhanglifan/leaf_server/src/proto/Enumb\x06proto3"
+	"\x06FAILED\x10\x01B2Z0github.com/zhanglifan/leaf_server/src/proto/Enumb\x06proto3"
 
 var (
 	file_Enum_proto_rawDescOnce sync.Once
@@ -200,11 +140,10 @@ func file_Enum_proto_rawDescGZIP() []byte {
 	return file_Enum_proto_rawDescData
 }
 
-var file_Enum_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
+var file_Enum_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_Enum_proto_goTypes = []any{
 	(EPlatformType)(0), // 0: Enum.EPlatformType
-	(EGoodsType)(0),    // 1: Enum.EGoodsType
-	(EPlayerUI)(0),     // 2: Enum.EPlayerUI
+	(EErrorCode)(0),    // 1: Enum.EErrorCode
 }
 var file_Enum_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -224,7 +163,7 @@ func file_Enum_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Enum_proto_rawDesc), len(file_Enum_proto_rawDesc)),
-			NumEnums:      3,
+			NumEnums:      2,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,

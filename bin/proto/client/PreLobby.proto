@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package PreLobby;
 
-import "Struct.proto";
 import "Enum.proto";
 option go_package = "github.com/zhanglifan/leaf_server/src/proto/PreLobby";
 
@@ -13,8 +12,7 @@ message ReqLogin {
   Enum.EPlatformType  PlatformID = 1;    // 平台 ID
   string              AccountID = 2;    // 账号 ID
   string              AccountName = 3;    // 账号名称
-  string              JobNumber = 4;   // 工号
-  string              AuthSecret = 5;   // 授权秘钥(steam授权后, 服务端生成)
+  string              AuthSecret = 4;   // 授权秘钥(steam授权后, 服务端生成)
 }
 
 // 反馈： 玩家角色信息
@@ -45,10 +43,8 @@ message ReqEnterLobby {
 message PlayerBaseInfo {
   int32                       RoleLevel = 1;        // 角色等级
   string                      RoleName = 2;        // 角色名称
-  Struct.HeroData             HeroData = 3;        // 英雄数据
-
-  int32                       OnlineTime = 100;      // 玩家登录时间
-  int32                       OfflineTime = 101;      // 玩家离线时间
+  int32                       OnlineTime = 3;      // 玩家登录时间
+  int32                       OfflineTime = 4;      // 玩家离线时间
 }
 
 // 反馈：进入大厅

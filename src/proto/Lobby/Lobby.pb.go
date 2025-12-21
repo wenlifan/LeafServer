@@ -7,12 +7,9 @@
 package Lobby
 
 import (
-	Enum "github.com/zhanglifan/leaf_server/src/proto/Enum"
-	Struct "github.com/zhanglifan/leaf_server/src/proto/Struct"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
-	sync "sync"
 	unsafe "unsafe"
 )
 
@@ -23,185 +20,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// ------------------------------------------------------------------
-// 请求： 改变英雄
-type ReqChangeHero struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	HeroData      *Struct.HeroData       `protobuf:"bytes,1,opt,name=HeroData,proto3" json:"HeroData,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ReqChangeHero) Reset() {
-	*x = ReqChangeHero{}
-	mi := &file_Lobby_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ReqChangeHero) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ReqChangeHero) ProtoMessage() {}
-
-func (x *ReqChangeHero) ProtoReflect() protoreflect.Message {
-	mi := &file_Lobby_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ReqChangeHero.ProtoReflect.Descriptor instead.
-func (*ReqChangeHero) Descriptor() ([]byte, []int) {
-	return file_Lobby_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *ReqChangeHero) GetHeroData() *Struct.HeroData {
-	if x != nil {
-		return x.HeroData
-	}
-	return nil
-}
-
-// 反馈： 改变英雄
-type RspChangeHero struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	HeroData      *Struct.HeroData       `protobuf:"bytes,1,opt,name=HeroData,proto3" json:"HeroData,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RspChangeHero) Reset() {
-	*x = RspChangeHero{}
-	mi := &file_Lobby_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RspChangeHero) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RspChangeHero) ProtoMessage() {}
-
-func (x *RspChangeHero) ProtoReflect() protoreflect.Message {
-	mi := &file_Lobby_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RspChangeHero.ProtoReflect.Descriptor instead.
-func (*RspChangeHero) Descriptor() ([]byte, []int) {
-	return file_Lobby_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *RspChangeHero) GetHeroData() *Struct.HeroData {
-	if x != nil {
-		return x.HeroData
-	}
-	return nil
-}
-
-// ------------------------------------------------------------------
-// 请求 设置玩家所在界面
-type ReqSetHML struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Hml           Enum.EPlayerUI         `protobuf:"varint,1,opt,name=Hml,proto3,enum=Enum.EPlayerUI" json:"Hml,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ReqSetHML) Reset() {
-	*x = ReqSetHML{}
-	mi := &file_Lobby_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ReqSetHML) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ReqSetHML) ProtoMessage() {}
-
-func (x *ReqSetHML) ProtoReflect() protoreflect.Message {
-	mi := &file_Lobby_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ReqSetHML.ProtoReflect.Descriptor instead.
-func (*ReqSetHML) Descriptor() ([]byte, []int) {
-	return file_Lobby_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *ReqSetHML) GetHml() Enum.EPlayerUI {
-	if x != nil {
-		return x.Hml
-	}
-	return Enum.EPlayerUI(0)
-}
-
 var File_Lobby_proto protoreflect.FileDescriptor
 
 const file_Lobby_proto_rawDesc = "" +
 	"\n" +
-	"\vLobby.proto\x12\x05Lobby\x1a\fStruct.proto\x1a\n" +
-	"Enum.proto\"=\n" +
-	"\rReqChangeHero\x12,\n" +
-	"\bHeroData\x18\x01 \x01(\v2\x10.Struct.HeroDataR\bHeroData\"=\n" +
-	"\rRspChangeHero\x12,\n" +
-	"\bHeroData\x18\x01 \x01(\v2\x10.Struct.HeroDataR\bHeroData\".\n" +
-	"\tReqSetHML\x12!\n" +
-	"\x03Hml\x18\x01 \x01(\x0e2\x0f.Enum.EPlayerUIR\x03HmlB3Z1github.com/zhanglifan/leaf_server/src/proto/Lobbyb\x06proto3"
+	"\vLobby.proto\x12\x05LobbyB3Z1github.com/zhanglifan/leaf_server/src/proto/Lobbyb\x06proto3"
 
-var (
-	file_Lobby_proto_rawDescOnce sync.Once
-	file_Lobby_proto_rawDescData []byte
-)
-
-func file_Lobby_proto_rawDescGZIP() []byte {
-	file_Lobby_proto_rawDescOnce.Do(func() {
-		file_Lobby_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_Lobby_proto_rawDesc), len(file_Lobby_proto_rawDesc)))
-	})
-	return file_Lobby_proto_rawDescData
-}
-
-var file_Lobby_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_Lobby_proto_goTypes = []any{
-	(*ReqChangeHero)(nil),   // 0: Lobby.ReqChangeHero
-	(*RspChangeHero)(nil),   // 1: Lobby.RspChangeHero
-	(*ReqSetHML)(nil),       // 2: Lobby.ReqSetHML
-	(*Struct.HeroData)(nil), // 3: Struct.HeroData
-	(Enum.EPlayerUI)(0),     // 4: Enum.EPlayerUI
-}
+var file_Lobby_proto_goTypes = []any{}
 var file_Lobby_proto_depIdxs = []int32{
-	3, // 0: Lobby.ReqChangeHero.HeroData:type_name -> Struct.HeroData
-	3, // 1: Lobby.RspChangeHero.HeroData:type_name -> Struct.HeroData
-	4, // 2: Lobby.ReqSetHML.Hml:type_name -> Enum.EPlayerUI
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_Lobby_proto_init() }
@@ -215,13 +46,12 @@ func file_Lobby_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Lobby_proto_rawDesc), len(file_Lobby_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_Lobby_proto_goTypes,
 		DependencyIndexes: file_Lobby_proto_depIdxs,
-		MessageInfos:      file_Lobby_proto_msgTypes,
 	}.Build()
 	File_Lobby_proto = out.File
 	file_Lobby_proto_goTypes = nil

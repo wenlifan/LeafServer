@@ -83,229 +83,6 @@ func (x *ItemData) GetItemLevel() int32 {
 	return 0
 }
 
-// 数据：技能
-type SkillData struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SkillID       int32                  `protobuf:"varint,1,opt,name=SkillID,proto3" json:"SkillID,omitempty"`       // 技能 ID
-	SkillLevel    int32                  `protobuf:"varint,2,opt,name=SkillLevel,proto3" json:"SkillLevel,omitempty"` // 技能等级
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *SkillData) Reset() {
-	*x = SkillData{}
-	mi := &file_Struct_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *SkillData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SkillData) ProtoMessage() {}
-
-func (x *SkillData) ProtoReflect() protoreflect.Message {
-	mi := &file_Struct_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SkillData.ProtoReflect.Descriptor instead.
-func (*SkillData) Descriptor() ([]byte, []int) {
-	return file_Struct_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *SkillData) GetSkillID() int32 {
-	if x != nil {
-		return x.SkillID
-	}
-	return 0
-}
-
-func (x *SkillData) GetSkillLevel() int32 {
-	if x != nil {
-		return x.SkillLevel
-	}
-	return 0
-}
-
-// 数据：英雄易变数据
-type HeroExtraData struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	WeaponList       []*ItemData            `protobuf:"bytes,10,rep,name=WeaponList,proto3" json:"WeaponList,omitempty"`                                                                                         // 物品：武器列表
-	EquipmentList    []*ItemData            `protobuf:"bytes,11,rep,name=EquipmentList,proto3" json:"EquipmentList,omitempty"`                                                                                   // 物品：防具列表
-	ItemList         []*ItemData            `protobuf:"bytes,12,rep,name=ItemList,proto3" json:"ItemList,omitempty"`                                                                                             // 物品：道具列表
-	SkillList        []*SkillData           `protobuf:"bytes,13,rep,name=SkillList,proto3" json:"SkillList,omitempty"`                                                                                           // 技能列表
-	CurWeaponList    map[int32]int32        `protobuf:"bytes,20,rep,name=CurWeaponList,proto3" json:"CurWeaponList,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`       // 当前使用的武器(武器槽+对应武器ID) : 最大数量 5
-	CurEquipmentList map[int32]int32        `protobuf:"bytes,21,rep,name=CurEquipmentList,proto3" json:"CurEquipmentList,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"` // 当前使用的防具(防具槽+对应防具ID) ： 最大数量 5
-	CurSkillList     map[int32]int32        `protobuf:"bytes,30,rep,name=CurSkillList,proto3" json:"CurSkillList,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`         // 快捷键：当前使用的技能列表(绑定Key+对应技能ID) ： 最大数量 255
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
-}
-
-func (x *HeroExtraData) Reset() {
-	*x = HeroExtraData{}
-	mi := &file_Struct_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HeroExtraData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HeroExtraData) ProtoMessage() {}
-
-func (x *HeroExtraData) ProtoReflect() protoreflect.Message {
-	mi := &file_Struct_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HeroExtraData.ProtoReflect.Descriptor instead.
-func (*HeroExtraData) Descriptor() ([]byte, []int) {
-	return file_Struct_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *HeroExtraData) GetWeaponList() []*ItemData {
-	if x != nil {
-		return x.WeaponList
-	}
-	return nil
-}
-
-func (x *HeroExtraData) GetEquipmentList() []*ItemData {
-	if x != nil {
-		return x.EquipmentList
-	}
-	return nil
-}
-
-func (x *HeroExtraData) GetItemList() []*ItemData {
-	if x != nil {
-		return x.ItemList
-	}
-	return nil
-}
-
-func (x *HeroExtraData) GetSkillList() []*SkillData {
-	if x != nil {
-		return x.SkillList
-	}
-	return nil
-}
-
-func (x *HeroExtraData) GetCurWeaponList() map[int32]int32 {
-	if x != nil {
-		return x.CurWeaponList
-	}
-	return nil
-}
-
-func (x *HeroExtraData) GetCurEquipmentList() map[int32]int32 {
-	if x != nil {
-		return x.CurEquipmentList
-	}
-	return nil
-}
-
-func (x *HeroExtraData) GetCurSkillList() map[int32]int32 {
-	if x != nil {
-		return x.CurSkillList
-	}
-	return nil
-}
-
-// 数据： 英雄数据
-type HeroData struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	HeroCfgID      int32                  `protobuf:"varint,1,opt,name=HeroCfgID,proto3" json:"HeroCfgID,omitempty"`                                                                                      // 数据配置 ID --- FDSCharacterCustomEquipTable
-	GenderType     int32                  `protobuf:"varint,2,opt,name=GenderType,proto3" json:"GenderType,omitempty"`                                                                                    // 性别
-	CustomModelIDs map[int32]int32        `protobuf:"bytes,3,rep,name=CustomModelIDs,proto3" json:"CustomModelIDs,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"` // 自定义模型ID(部位+对应ID)
-	CustomColorIDs map[int32]int32        `protobuf:"bytes,4,rep,name=CustomColorIDs,proto3" json:"CustomColorIDs,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"` // 自定义颜色ID(部位+对应ID)
-	HeroExtraData  *HeroExtraData         `protobuf:"bytes,5,opt,name=HeroExtraData,proto3" json:"HeroExtraData,omitempty"`                                                                               // 英雄易变数据
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *HeroData) Reset() {
-	*x = HeroData{}
-	mi := &file_Struct_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HeroData) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HeroData) ProtoMessage() {}
-
-func (x *HeroData) ProtoReflect() protoreflect.Message {
-	mi := &file_Struct_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HeroData.ProtoReflect.Descriptor instead.
-func (*HeroData) Descriptor() ([]byte, []int) {
-	return file_Struct_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *HeroData) GetHeroCfgID() int32 {
-	if x != nil {
-		return x.HeroCfgID
-	}
-	return 0
-}
-
-func (x *HeroData) GetGenderType() int32 {
-	if x != nil {
-		return x.GenderType
-	}
-	return 0
-}
-
-func (x *HeroData) GetCustomModelIDs() map[int32]int32 {
-	if x != nil {
-		return x.CustomModelIDs
-	}
-	return nil
-}
-
-func (x *HeroData) GetCustomColorIDs() map[int32]int32 {
-	if x != nil {
-		return x.CustomColorIDs
-	}
-	return nil
-}
-
-func (x *HeroData) GetHeroExtraData() *HeroExtraData {
-	if x != nil {
-		return x.HeroExtraData
-	}
-	return nil
-}
-
 var File_Struct_proto protoreflect.FileDescriptor
 
 const file_Struct_proto_rawDesc = "" +
@@ -314,46 +91,7 @@ const file_Struct_proto_rawDesc = "" +
 	"\bItemData\x12\x16\n" +
 	"\x06ItemID\x18\x01 \x01(\x05R\x06ItemID\x12\x1c\n" +
 	"\tItemCount\x18\x02 \x01(\x05R\tItemCount\x12\x1c\n" +
-	"\tItemLevel\x18\x03 \x01(\x05R\tItemLevel\"E\n" +
-	"\tSkillData\x12\x18\n" +
-	"\aSkillID\x18\x01 \x01(\x05R\aSkillID\x12\x1e\n" +
-	"\n" +
-	"SkillLevel\x18\x02 \x01(\x05R\n" +
-	"SkillLevel\"\x96\x05\n" +
-	"\rHeroExtraData\x120\n" +
-	"\n" +
-	"WeaponList\x18\n" +
-	" \x03(\v2\x10.Struct.ItemDataR\n" +
-	"WeaponList\x126\n" +
-	"\rEquipmentList\x18\v \x03(\v2\x10.Struct.ItemDataR\rEquipmentList\x12,\n" +
-	"\bItemList\x18\f \x03(\v2\x10.Struct.ItemDataR\bItemList\x12/\n" +
-	"\tSkillList\x18\r \x03(\v2\x11.Struct.SkillDataR\tSkillList\x12N\n" +
-	"\rCurWeaponList\x18\x14 \x03(\v2(.Struct.HeroExtraData.CurWeaponListEntryR\rCurWeaponList\x12W\n" +
-	"\x10CurEquipmentList\x18\x15 \x03(\v2+.Struct.HeroExtraData.CurEquipmentListEntryR\x10CurEquipmentList\x12K\n" +
-	"\fCurSkillList\x18\x1e \x03(\v2'.Struct.HeroExtraData.CurSkillListEntryR\fCurSkillList\x1a@\n" +
-	"\x12CurWeaponListEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\x1aC\n" +
-	"\x15CurEquipmentListEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\x1a?\n" +
-	"\x11CurSkillListEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"\xa7\x03\n" +
-	"\bHeroData\x12\x1c\n" +
-	"\tHeroCfgID\x18\x01 \x01(\x05R\tHeroCfgID\x12\x1e\n" +
-	"\n" +
-	"GenderType\x18\x02 \x01(\x05R\n" +
-	"GenderType\x12L\n" +
-	"\x0eCustomModelIDs\x18\x03 \x03(\v2$.Struct.HeroData.CustomModelIDsEntryR\x0eCustomModelIDs\x12L\n" +
-	"\x0eCustomColorIDs\x18\x04 \x03(\v2$.Struct.HeroData.CustomColorIDsEntryR\x0eCustomColorIDs\x12;\n" +
-	"\rHeroExtraData\x18\x05 \x01(\v2\x15.Struct.HeroExtraDataR\rHeroExtraData\x1aA\n" +
-	"\x13CustomModelIDsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\x1aA\n" +
-	"\x13CustomColorIDsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01B4Z2github.com/zhanglifan/leaf_server/src/proto/Structb\x06proto3"
+	"\tItemLevel\x18\x03 \x01(\x05R\tItemLevelB4Z2github.com/zhanglifan/leaf_server/src/proto/Structb\x06proto3"
 
 var (
 	file_Struct_proto_rawDescOnce sync.Once
@@ -367,34 +105,16 @@ func file_Struct_proto_rawDescGZIP() []byte {
 	return file_Struct_proto_rawDescData
 }
 
-var file_Struct_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_Struct_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_Struct_proto_goTypes = []any{
-	(*ItemData)(nil),      // 0: Struct.ItemData
-	(*SkillData)(nil),     // 1: Struct.SkillData
-	(*HeroExtraData)(nil), // 2: Struct.HeroExtraData
-	(*HeroData)(nil),      // 3: Struct.HeroData
-	nil,                   // 4: Struct.HeroExtraData.CurWeaponListEntry
-	nil,                   // 5: Struct.HeroExtraData.CurEquipmentListEntry
-	nil,                   // 6: Struct.HeroExtraData.CurSkillListEntry
-	nil,                   // 7: Struct.HeroData.CustomModelIDsEntry
-	nil,                   // 8: Struct.HeroData.CustomColorIDsEntry
+	(*ItemData)(nil), // 0: Struct.ItemData
 }
 var file_Struct_proto_depIdxs = []int32{
-	0,  // 0: Struct.HeroExtraData.WeaponList:type_name -> Struct.ItemData
-	0,  // 1: Struct.HeroExtraData.EquipmentList:type_name -> Struct.ItemData
-	0,  // 2: Struct.HeroExtraData.ItemList:type_name -> Struct.ItemData
-	1,  // 3: Struct.HeroExtraData.SkillList:type_name -> Struct.SkillData
-	4,  // 4: Struct.HeroExtraData.CurWeaponList:type_name -> Struct.HeroExtraData.CurWeaponListEntry
-	5,  // 5: Struct.HeroExtraData.CurEquipmentList:type_name -> Struct.HeroExtraData.CurEquipmentListEntry
-	6,  // 6: Struct.HeroExtraData.CurSkillList:type_name -> Struct.HeroExtraData.CurSkillListEntry
-	7,  // 7: Struct.HeroData.CustomModelIDs:type_name -> Struct.HeroData.CustomModelIDsEntry
-	8,  // 8: Struct.HeroData.CustomColorIDs:type_name -> Struct.HeroData.CustomColorIDsEntry
-	2,  // 9: Struct.HeroData.HeroExtraData:type_name -> Struct.HeroExtraData
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_Struct_proto_init() }
@@ -408,7 +128,7 @@ func file_Struct_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_Struct_proto_rawDesc), len(file_Struct_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

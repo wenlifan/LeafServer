@@ -6,3 +6,4 @@ run/*/log/*.log
 docs/操作记录/*
 run
 cmd/*/*.exe
+./*.exe

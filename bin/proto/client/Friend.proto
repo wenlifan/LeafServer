@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package Friend;
+import "Enum.proto";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/Friend";
+
+//------------------------------------------------------------------
+// 请求: 好友服务测试
+message ReqFriendTest {
+}
+//------------------------------------------------------------------
+// 响应: 好友服务测试
+message RspFriendTest {
+    // 错误码
+    Enum.EErrorCode ErrorCode = 1;
+}
+//------------------------------------------------------------------
+
+//------------------------------------------------------------------
