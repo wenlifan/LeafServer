@@ -3,6 +3,7 @@ package internal
 import (
 	"reflect"
 
+	"github.com/zhanglifan/leaf_server/leaf/cluster"
 	"github.com/zhanglifan/leaf_server/leaf/gate"
 	"github.com/zhanglifan/leaf_server/leaf/log"
 	"github.com/zhanglifan/leaf_server/src/proto/CFriend"
@@ -70,8 +71,19 @@ func handleFriendReqFriendTest(args []interface{}) {
 	log.Debug("[Friend] ReqFriendTest: %+v", m)
 
 	// 调用 friend服务的 CFriend.CFriendAdd
-	// 注意：需要使用类型而不是字符串，因为friend server注册时使用的是类型
-	friend.ChanRPC.Go(reflect.TypeOf(&CFriend.CFriendAdd{}), a, m)
+	// 参考 Heartbeat 的调用方式，使用 cluster.Call 进行 RPC 调用
+	rpcArgs := &CFriend.CFriendAdd{
+		RoleUID:   "test_role_uid",   // 这里需要根据实际业务从 m 中获取
+		FriendUID: "test_friend_uid", // 这里需要根据实际业务从 m 中获取
+		ListType:  "friend",
+	}
+	var reply friend.CFriendAddReply
+	err := cluster.Call("friend", "FriendMsg.FriendAdd", rpcArgs, &reply)
+	if err != nil {
+		log.Error("[Game] 调用friend服务失败: %v", err)
+	} else {
+		log.Debug("[Game] 好友添加结果: Success=%v, Message=%s", reply.Success, reply.Message)
+	}
 
 	// 发送响应
 	a.WriteMsgBase(&Friend.RspFriendTest{

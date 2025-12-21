@@ -2,6 +2,7 @@ package cluster
 
 import (
 	"encoding/json"
+	"fmt"
 	"net"
 	"net/http"
 	"net/rpc"
@@ -109,6 +110,19 @@ func Load(jsonData []byte, nodeName string) {
 			}
 		}
 	}()
+}
+
+// Call 调用指定节点的RPC方法
+// node: 目标节点名称（如"friend"、"game"等）
+// method: RPC方法名（如"FriendMsg.FriendAdd"）
+// args: 请求参数
+// reply: 回复参数（必须是指针）
+func Call(node string, method string, args interface{}, reply interface{}) error {
+	client, ok := clients[node]
+	if !ok {
+		return fmt.Errorf("node %s not connected", node)
+	}
+	return client.Call(method, args, reply)
 }
 
 // Start 启动HTTP RPC服务器，应该在模块的Run方法中调用

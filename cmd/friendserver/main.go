@@ -6,8 +6,6 @@ import (
 	"github.com/zhanglifan/leaf_server/src/cluster"
 	"github.com/zhanglifan/leaf_server/src/server/conf"
 	"github.com/zhanglifan/leaf_server/src/server/friend"
-	"github.com/zhanglifan/leaf_server/src/server/game"
-	"github.com/zhanglifan/leaf_server/src/server/gate"
 	"github.com/zhanglifan/leaf_server/src/server/redisdb"
 )
 
@@ -20,8 +18,8 @@ func main() {
 	lconf.Node = conf.Server.Node
 
 	leaf.Run(
-		game.Module,
-		gate.Module,
+		// game.Module,
+		// gate.Module,
 		cluster.Module,
 		redisdb.Module,
 		friend.Module,
