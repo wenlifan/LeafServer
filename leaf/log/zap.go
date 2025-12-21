@@ -2,12 +2,13 @@ package log
 
 import (
 	"errors"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
 	"log"
 	"os"
 	"strings"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 type ZapLogger struct {
@@ -76,23 +77,23 @@ func (logger *ZapLogger) Close() {
 
 func (logger *ZapLogger) Debug(format string, a ...interface{}) {
 	//logger.doPrintf(debugLevel, printDebugLevel, format, a...)
-	logger.log.Debug(format, a)
+	logger.log.Debugf(format, a...)
 }
 
 func (logger *ZapLogger) Info(format string, a ...interface{}) {
-	logger.log.Infof(format, a)
+	logger.log.Infof(format, a...)
 }
 
 func (logger *ZapLogger) Warning(format string, a ...interface{}) {
-	logger.log.Warnf(format, a)
+	logger.log.Warnf(format, a...)
 }
 
 func (logger *ZapLogger) Error(format string, a ...interface{}) {
-	logger.log.Errorf(format, a)
+	logger.log.Errorf(format, a...)
 }
 
 func (logger *ZapLogger) Fatal(format string, a ...interface{}) {
-	logger.log.Fatalf(format, a)
+	logger.log.Fatalf(format, a...)
 }
 
 var gLogger, _ = New("debug", "", log.LstdFlags)

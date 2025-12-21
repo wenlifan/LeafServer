@@ -5,5 +5,7 @@ run/*/log/*.log
 *.log
 docs/操作记录/*
 run
-cmd/*/*.exe
-./*.exe
+cmd/*/*.exe*
+leaf/*.exe
+friendserver.exe
+gameserver.exe

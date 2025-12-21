@@ -1,13 +1,14 @@
 package internal
 
 import (
+	"io/ioutil"
+
 	"github.com/zhanglifan/leaf_server/leaf/cluster"
 	lconf "github.com/zhanglifan/leaf_server/leaf/conf"
 	"github.com/zhanglifan/leaf_server/leaf/log"
 	"github.com/zhanglifan/leaf_server/leaf/module"
 	"github.com/zhanglifan/leaf_server/src/server/base"
 	"github.com/zhanglifan/leaf_server/src/server/conf"
-	"io/ioutil"
 )
 
 var (
@@ -28,8 +29,15 @@ func (m *Module) OnInit() {
 		log.Fatal("%v", err)
 	}
 
-	// Rpc 启动
+	// Rpc 配置加载（不阻塞）
 	cluster.Load(data, lconf.Node)
+}
+
+func (m *Module) Run(closeSig chan bool) {
+	// 在独立的goroutine中启动HTTP RPC服务器
+	go cluster.Start()
+	// 运行Skeleton的事件循环
+	m.Skeleton.Run(closeSig)
 }
 
 func (m *Module) OnDestroy() {

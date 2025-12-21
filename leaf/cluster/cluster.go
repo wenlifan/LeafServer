@@ -2,11 +2,12 @@ package cluster
 
 import (
 	"encoding/json"
-	"github.com/zhanglifan/leaf_server/leaf/log"
 	"net"
 	"net/http"
 	"net/rpc"
 	"time"
+
+	"github.com/zhanglifan/leaf_server/leaf/log"
 )
 
 var (
@@ -108,7 +109,13 @@ func Load(jsonData []byte, nodeName string) {
 			}
 		}
 	}()
+}
 
+// Start 启动HTTP RPC服务器，应该在模块的Run方法中调用
+func Start() {
+	if server == nil {
+		log.Fatal("cluster server not initialized, call Load first")
+	}
 	http.Serve(server, nil)
 }
 
