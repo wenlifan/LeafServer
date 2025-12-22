@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package Lobby;
+// import "Struct.proto";
+// import "Enum.proto";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/Lobby";
+
+//------------------------------------------------------------------
+
+//------------------------------------------------------------------
+
+
+//------------------------------------------------------------------

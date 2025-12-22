@@ -1,10 +1,10 @@
 package internal
 
 import (
-	"zlf_leaf/src/frame/leaf/gate"
-	"zlf_leaf/src/server/conf"
-	"zlf_leaf/src/server/game"
-	"zlf_leaf/src/server/msg"
+	"github.com/zhanglifan/leaf_server/leaf/gate"
+	"github.com/zhanglifan/leaf_server/src/server/conf"
+	"github.com/zhanglifan/leaf_server/src/server/game"
+	"github.com/zhanglifan/leaf_server/src/server/msg"
 )
 
 type Module struct {

@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package PreLobby;
+
+import "Enum.proto";
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/PreLobby";
+
+
+//------------------------------------------------------------------
+// 请求： 登陆
+message ReqLogin {
+  Enum.EPlatformType  PlatformID = 1;    // 平台 ID
+  string              AccountID = 2;    // 账号 ID
+  string              AccountName = 3;    // 账号名称
+  string              AuthSecret = 4;   // 授权秘钥(steam授权后, 服务端生成)
+}
+
+// 反馈： 玩家角色信息
+message RspRoleInfo {
+  int64   RoleUID = 1;    // 角色 UID
+  string  RoleName = 2;    // 角色名称
+}
+
+// 请求： 创建角色
+message ReqCreateRole {
+  string                  RoleName = 1;    // 角色名称
+}
+
+// 反馈： 创建角色结果
+message RspCreateRole {
+  bool    Succeed = 1;    // 是否成功
+  string  RoleName = 2;    // 角色名称
+}
+
+//------------------------------------------------------------------
+
+// 请求：进入大厅
+message ReqEnterLobby {
+
+}
+
+// 数据：玩家数据
+message PlayerBaseInfo {
+  int32                       RoleLevel = 1;        // 角色等级
+  string                      RoleName = 2;        // 角色名称
+  int32                       OnlineTime = 3;      // 玩家登录时间
+  int32                       OfflineTime = 4;      // 玩家离线时间
+}
+
+// 反馈：进入大厅
+message RspEnterLobby {
+  PlayerBaseInfo PlayerInfo = 1;  // 玩家数据
+}
+//------------------------------------------------------------------

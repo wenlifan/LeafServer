@@ -1,7 +1,7 @@
 package login
 
 import (
-	"zlf_leaf/src/server/login/internal"
+	"github.com/zhanglifan/leaf_server/src/server/login/internal"
 )
 
 var (

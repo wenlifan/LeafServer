@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package Struct;
+option go_package = "github.com/zhanglifan/leaf_server/src/proto/Struct";
+
+//------------------------------------------------------------------
+// 数据：物品 （武器、防具、道具）
+message ItemData {
+  int32           ItemID = 1; // 物品 ID
+  int32           ItemCount = 2; // 物品数量
+  int32           ItemLevel = 3; // 物品等级
+}
+
+//------------------------------------------------------------------
